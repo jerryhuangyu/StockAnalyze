@@ -6,12 +6,13 @@ import {
 } from 'react-router-dom';
 
 import { Add, Home, Update, Symbol } from './pages';
-import { Chart } from './components';
+import { Chart, Navbar } from './components';
 
 function App() {
 
   return (
     <BrowserRouter>
+    <Navbar />
     <div className='flex flex-col justify-center items-center h-screen'>
       <Routes>
         <Route path='/' element={<Home />} />

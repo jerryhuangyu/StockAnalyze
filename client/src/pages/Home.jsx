@@ -37,8 +37,8 @@ const Home = () => {
   return (
     <>
       <div
-        className="grid gap-3 mb-3 grid-cols-2 grid-rows-2
-        xl:w-[60%] lg:w-[70%] w-[90%] h-[240px]"
+        className="grid gap-3 mb-3 grid-cols-1 sm:grid-cols-2
+        xl:w-[60%] lg:w-[70%] w-[90%] h-[400px] sm:h-[240px]"
       >
         <HomeCard header={"1504"} description={"Transaction"} icon={transaction} />
         <HomeCard header={80} description={"Daily Volue"} icon={volue} />

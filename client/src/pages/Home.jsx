@@ -36,6 +36,14 @@ const Home = () => {
   return (
     <>
       <div
+        className="grid gap-3 mb-3 grid-cols-2 grid-rows-2 xl:w-[60%] lg:w-[70%] w-[90%] h-[240px]"
+      >
+        <div className="bg-primary-100 rounded-lg">one</div>
+        <div className="bg-primary-100 rounded-lg">two</div>
+        <div className="bg-primary-100 rounded-lg">three</div>
+        <div className="bg-primary-100 rounded-lg">four</div>
+      </div>
+      <div
         className="bg-primary-100 bg-opacity-[0.17] shadow-xl
         h-[460px] rounded-xl p-10 xl:w-[60%] lg:w-[70%] w-[90%]"
       >

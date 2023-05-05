@@ -7,6 +7,10 @@ import analyze from './navbar/analyze.svg'
 import analyze_dark from './navbar/analyze_dark.png'
 import home from './navbar/home.svg'
 
+import transaction from './transaction.png';
+import money from './money.png';
+import earning from './earning.png';
+import volue from './volue.png';
 
 export {
     trash,
@@ -16,4 +20,8 @@ export {
     analyze,
     analyze_dark,
     home,
+    transaction,
+    money,
+    earning,
+    volue,
 }

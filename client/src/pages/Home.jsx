@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import { TransactionHistoryTable, GroupButton } from "../components";
+import { TransactionHistoryTable, GroupButton, HomeCard } from "../components";
+import { transaction, money, earning, volue } from "../assets";
 
 const fetchAllStocks = async (setStocks) => {
   try {
@@ -36,12 +37,13 @@ const Home = () => {
   return (
     <>
       <div
-        className="grid gap-3 mb-3 grid-cols-2 grid-rows-2 xl:w-[60%] lg:w-[70%] w-[90%] h-[240px]"
+        className="grid gap-3 mb-3 grid-cols-2 grid-rows-2
+        xl:w-[60%] lg:w-[70%] w-[90%] h-[240px]"
       >
-        <div className="bg-primary-100 rounded-lg">one</div>
-        <div className="bg-primary-100 rounded-lg">two</div>
-        <div className="bg-primary-100 rounded-lg">three</div>
-        <div className="bg-primary-100 rounded-lg">four</div>
+        <HomeCard header={"1504"} description={"Transaction"} icon={transaction} />
+        <HomeCard header={80} description={"Daily Volue"} icon={volue} />
+        <HomeCard header={284} description={"Injection"} icon={money} />
+        <HomeCard header={"$7802"} description={"Earning"} icon={earning} />
       </div>
       <div
         className="bg-primary-100 bg-opacity-[0.17] shadow-xl

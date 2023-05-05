@@ -8,7 +8,8 @@ import {
 
 const Navbar = () => {
   return (
-    <div className="flex justify-between px-10 gap-3 h-12 bg-primary-200">
+    <div className="flex justify-between px-10 gap-3 h-12 bg-primary-50 ">
+      <div className="w-[100%] h-10 z-[-1] absolute bg-primary-200 top-[10px] left-0"></div>
       <div className="flex items-center text-xl font-mono font-bold cursor-pointer">
         <Link to={"/"}>
           Olulu Stock

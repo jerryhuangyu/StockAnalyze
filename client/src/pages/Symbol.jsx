@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from "react";
-import { Chart } from "../components";
 import { Outlet, useParams } from "react-router-dom";
 import { GroupButton } from "../components";
 

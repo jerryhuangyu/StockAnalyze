@@ -5,7 +5,8 @@ import edit from './write.png';
 import bookkeep from './navbar/bookkeep.svg'
 import analyze from './navbar/analyze.svg'
 import analyze_dark from './navbar/analyze_dark.png'
-import home from './navbar/home.svg'
+import home from './navbar/home.svg';
+import menu from './navbar/menu.png';
 
 import transaction from './transaction.png';
 import money from './money.png';
@@ -24,4 +25,5 @@ export {
     money,
     earning,
     volue,
+    menu,
 }

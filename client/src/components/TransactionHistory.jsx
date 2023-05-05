@@ -7,10 +7,10 @@ const HistoryTableHeader = () => {
   return (
     <thead>
       <tr className='items-center justify-center font-bold'>
-        <td className={`py-2 w-[120px] pl-3`}>Symbol</td>
+        <td className={`py-2 pl-3`}>Symbol</td>
         <td className={`py-2 w-[100px] text-end pr-6`}>Price</td>
-        <td className={`py-2 w-[100px] text-center`}>Quantity</td>
-        <td className={`py-2 w-[100px] text-end pr-3 hidden md:table-cell`}>Amount</td>
+        <td className={`py-2 text-center`}>Quantity</td>
+        <td className={`py-2 text-end pr-3 hidden lg:table-cell`}>Amount</td>
         <td className={`py-2 text-end pr-3 hidden md:table-cell`}>Status</td>
         <td className={`py-2 w-[25px] text-end pr-3`}></td>
         <td className={`py-2 w-[25px] text-end pr-3`}></td>
@@ -50,7 +50,7 @@ const HistoryTableList = ({ stocks }) => {
           <td className={`py-2 pl-3`}>{stock.symbol}</td>
           <td className={`py-2 text-end pr-6`}>${stock.price}</td>
           <td className={`py-2 text-center`}>{stock.quantity}</td>
-          <td className={`py-2 text-end pr-3 hidden md:table-cell`}>{stock.amount}</td>
+          <td className={`py-2 text-end pr-3 hidden lg:table-cell`}>{stock.amount}</td>
           <td className={`py-2 text-end pr-3 hidden md:table-cell`}>{stock.status}</td>
           <td className='py-2 pr-2'>
             <div className='cursor-pointer flex justify-center items-center bg-primary-out opacity-70 w-6 h-6 rounded-full'>

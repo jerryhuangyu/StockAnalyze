@@ -8,10 +8,13 @@ import analyze_dark from './navbar/analyze_dark.png'
 import home from './navbar/home.svg';
 import menu from './navbar/menu.png';
 
+import olulu from './member/olulu.png';
+
 import transaction from './transaction.png';
 import money from './money.png';
 import earning from './earning.png';
 import volue from './volue.png';
+import bell from './bell.png';
 
 export {
     trash,
@@ -26,4 +29,6 @@ export {
     earning,
     volue,
     menu,
+    olulu,
+    bell,
 }

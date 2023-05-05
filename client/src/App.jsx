@@ -13,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
     <Navbar />
-    <div className='flex flex-col mt-10 items-center'>
+    <div className='flex flex-col mt-6 items-center'>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/add' element={<Add />} />

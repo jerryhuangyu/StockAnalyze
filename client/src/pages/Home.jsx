@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { TransactionHistoryTable, GroupButton, HomeCard } from "../components";
+import {
+  TransactionHistoryTable,
+  GroupButton,
+  HomeCard,
+} from "../components";
 import { transaction, money, earning, volue, olulu, bell } from "../assets";
 
 const fetchAllStocks = async (setStocks) => {

@@ -4,6 +4,7 @@ import GroupButton from "./GroupButton";
 import Chart from "./Chart";
 import Navbar from "./Navbar";
 import HomeCard from "./HomeCard";
+import StockTicker from "./StockTicker";
 
 export {
     TransactionHistoryTable,
@@ -12,4 +13,5 @@ export {
     Chart,
     Navbar,
     HomeCard,
+    StockTicker,
 }

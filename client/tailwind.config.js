@@ -33,8 +33,25 @@ export default {
           "hover": "#9aeafd",
           "out": "#8cD4E5",
         },
-      }
+      },
+      animation: {
+        "marquee-left": 'marquee-left 25s linear infinite',
+        "marquee-right": 'marquee-right 25s linear infinite',
+      },
+      keyframes: {
+        "marquee-left": {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        "marquee-right": {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    // require('tailwind-scrollbar-hide')
+    // ...
+  ]
 }

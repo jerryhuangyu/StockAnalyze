@@ -94,7 +94,7 @@ const TransactionHistoryTable = ({ stocks }) => {
     <div
       className='flex justify-end w-full'
     >
-      <button className='underline cursor-pointer pr-3 pt-3 text-primary-300'>view all</button>
+      <button className='underline cursor-pointer pr-3 pt-3 text-primary-300' onClick="">view all</button>
     </div>
     </>
   )

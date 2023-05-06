@@ -54,10 +54,11 @@ const PersonalProfile = () => {
 };
 
 const Home = () => {
-  const [stocks, setStocks] = useState([]);
+  const [last6stocks, setLast6Stocks] = useState([]);
+  const [allStocks, setAllStocks] = useState([]);
 
   useEffect(() => {
-    fetchLast6Stocks(setStocks);
+    fetchLast6Stocks(setLast6Stocks);
   }, []);
 
   return (
@@ -97,7 +98,7 @@ const Home = () => {
         className="bg-primary-100 bg-opacity-[0.17] shadow-xl
         h-[460px] rounded-xl p-10 xl:w-[60%] lg:w-[70%] w-[90%]"
       >
-        <TransactionHistoryTable stocks={stocks} />
+        <TransactionHistoryTable stocks={last6stocks} />
       </div>
     </>
   );

@@ -7,7 +7,7 @@ const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
 
   return (
-    <div className="flex justify-between px-10 h-[60px] bg-primary-50 ">
+    <div className="flex justify-between px-[5%] lg:px-10 h-[60px] bg-primary-50 ">
       <div className="flex items-center text-xl font-mono font-bold cursor-pointer">
         <Link to={"/"}>S-Insight</Link>
       </div>

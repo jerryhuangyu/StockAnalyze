@@ -4,6 +4,7 @@ import {
   TransactionHistoryTable,
   GroupButton,
   HomeCard,
+  StockTicker,
 } from "../components";
 import { transaction, money, earning, volue, olulu, bell } from "../assets";
 
@@ -61,7 +62,10 @@ const Home = () => {
 
   return (
     <>
-      <div className="xl:w-[60%] lg:w-[70%] w-[90%] pt-6 pb-12">
+      <div className="w-full">
+        <StockTicker />
+      </div>
+      <div className="xl:w-[60%] lg:w-[70%] w-[90%] pt-10 pb-10">
         <PersonalProfile />
       </div>
       <div className="h-[200px] flex flex-col items-center">

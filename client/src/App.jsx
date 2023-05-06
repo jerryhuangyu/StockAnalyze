@@ -8,9 +8,6 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <div className="py-2">
-        <StockTicker />
-      </div>
       <div className="flex flex-col mt-1 items-center overflow-x-hidden">
         <Routes>
           <Route path="/" element={<Home />} />

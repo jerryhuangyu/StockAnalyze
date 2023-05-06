@@ -41,6 +41,26 @@ const stockList = [
     symbol: "10",
     change: -0.8,
   },
+  {
+    symbol: "11",
+    change: -5.5,
+  },
+  {
+    symbol: "APPL",
+    change: 4.69,
+  },
+  {
+    symbol: "NVDA",
+    change: 4.06,
+  },
+  {
+    symbol: "DIS",
+    change: 3.15,
+  },
+  {
+    symbol: "15",
+    change: -0.8,
+  },
 ];
 
 const StockTicker = () => {

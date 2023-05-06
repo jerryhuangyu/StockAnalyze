@@ -1,17 +1,14 @@
 import mysql from 'mysql';
 
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "jerry",
-//     password: "sudohuang",
-//     database: "stock",
-// })
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const db = mysql.createPool({
-    host: "us-cdbr-east-06.cleardb.net",
-    user: "bd1764d63736e4",
-    password: "579ee152",
-    database: "heroku_2d015e3987de5c9",
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
     connectionLimit: 10,
 })
 

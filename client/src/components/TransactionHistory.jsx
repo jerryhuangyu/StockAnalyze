@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { trash, edit } from '../assets';
+import { url } from '../constants';
 
 const HistoryTableHeader = () => {
   return (
@@ -24,7 +25,7 @@ const HistoryTableList = ({ stocks }) => {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/stock/"+id,
+        url.deploy + "stock/"+id,
         {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },

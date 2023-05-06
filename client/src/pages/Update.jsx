@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StockForm } from '../components';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { url } from '../constants';
 
 const fetchIdStock = async (
   stockId,
@@ -12,7 +13,7 @@ const fetchIdStock = async (
   statusPlaceholder
 ) => {
   try {
-    const response = await fetch( "http://localhost:8080/stock/" + stockId, { method: 'GET' } );
+    const response = await fetch( url.deploy + "stock/" + stockId, { method: 'GET' } );
     const data = await response.json();
     // setup defualt value for submit
     setStock({
@@ -68,7 +69,7 @@ const Update = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:8080/stock/" + stockId,
+        url.deploy + "stock/" + stockId,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },

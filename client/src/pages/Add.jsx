@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import { StockForm } from '../components';
+import { url } from '../constants';
 
 const Add = () => {
   const title = "Add New Order History";
@@ -31,7 +32,7 @@ const Add = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:8080/stock",
+        url.deploy + "stock",
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

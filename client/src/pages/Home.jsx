@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 
+import { transaction, money, earning, volue, olulu, bell } from "../assets";
+import { url } from "../constants";
 import {
   TransactionHistoryTable,
   GroupButton,
   HomeCard,
   StockTicker,
 } from "../components";
-import { transaction, money, earning, volue, olulu, bell } from "../assets";
 
 const fetchAllStocks = async (setStocks) => {
   try {
-    const response = await fetch("http://localhost:8080/stocks", {
+    const response = await fetch(url.deploy + "stocks", {
       method: "GET",
     });
     const data = await response.json();
@@ -22,7 +23,7 @@ const fetchAllStocks = async (setStocks) => {
 
 const fetchLast6Stocks = async (setStocks) => {
   try {
-    const response = await fetch("http://localhost:8080/stocks/lastsix", {
+    const response = await fetch(url.deploy + "stocks/lastsix", {
       method: "GET",
     });
     const data = await response.json();

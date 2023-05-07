@@ -30,4 +30,22 @@ stocksRouter.get('/lastsix', (req, res) => {
     })
 });
 
+stocksRouter.get('/value/transaction', (req, res) => {
+    const query = "SELECT COUNT(id) as idcount FROM olulu;";
+
+    db.query(query, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    })
+})
+
+stocksRouter.get('/value/dailyvolume', (req, res) => {
+    const query = "SELECT COUNT(*) as volumecount FROM olulu WHERE DATE(createdate) = CURDATE();";
+
+    db.query(query, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    })
+})
+
 export default stocksRouter;

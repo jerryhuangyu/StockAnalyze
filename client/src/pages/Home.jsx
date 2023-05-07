@@ -17,7 +17,7 @@ const fetchAllStocks = async (setStocks) => {
     const data = await response.json();
     setStocks(data);
   } catch (err) {
-    alert(err);
+    // alert(err);
   }
 };
 
@@ -29,7 +29,31 @@ const fetchLast6Stocks = async (setStocks) => {
     const data = await response.json();
     setStocks(data);
   } catch (err) {
-    alert(err);
+    // alert(err);
+  }
+};
+
+const fetchTransactionValue = async (setTransactionValue) => {
+  try {
+    const response = await fetch(url.deploy + "stocks/value/transaction", {
+      method: "GET",
+    });
+    const data = await response.json();
+    setTransactionValue(data[0].idcount);
+  } catch (err) {
+    // alert(err);
+  }
+};
+
+const fetchTodayVolume = async (setTransactionValue) => {
+  try {
+    const response = await fetch(url.deploy + "stocks/value/dailyvolume", {
+      method: "GET",
+    });
+    const data = await response.json();
+    setTransactionValue(data[0].volumecount);
+  } catch (err) {
+    // alert(err);
   }
 };
 
@@ -57,9 +81,13 @@ const PersonalProfile = () => {
 const Home = () => {
   const [last6stocks, setLast6Stocks] = useState([]);
   const [allStocks, setAllStocks] = useState(null);
+  const [transactionValue, setTransactionValue] = useState(null);
+  const [todayVolume, setTodayVolume] = useState(null);
 
   useEffect(() => {
     fetchLast6Stocks(setLast6Stocks);
+    fetchTransactionValue(setTransactionValue);
+    fetchTodayVolume(setTodayVolume);
   }, []);
 
   return (
@@ -87,11 +115,11 @@ const Home = () => {
         xl:w-[60%] lg:w-[70%] w-[90%] h-[400px] sm:h-[240px]"
       >
         <HomeCard
-          header={"1504"}
+          header={transactionValue}
           description={"Transaction"}
           icon={transaction}
         />
-        <HomeCard header={80} description={"Daily Volue"} icon={volue} />
+        <HomeCard header={todayVolume} description={"Daily Volume"} icon={volue} />
         <HomeCard header={284} description={"Injection"} icon={money} />
         <HomeCard header={"$7802"} description={"Earning"} icon={earning} />
       </div>

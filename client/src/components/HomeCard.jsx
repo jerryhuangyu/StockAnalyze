@@ -5,7 +5,7 @@ const HomeCard = ({ header, description, icon }) => {
       <div className="bg-primary-50 shadow rounded-lg flex justify-between items-center px-9">
         <div className="flex flex-col">
           <h2 className="text-primary-out font-bold drop-shadow-sm text-5xl">
-            {header}
+            {header?header:"..."}
           </h2>
           <p className="text-primary-200">{description}</p>
         </div>

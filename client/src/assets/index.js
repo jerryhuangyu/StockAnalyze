@@ -9,6 +9,7 @@ import home from './navbar/home.svg';
 import menu from './navbar/menu.png';
 
 import olulu from './member/olulu.png';
+import jerry from './member/jerry.jpg';
 
 import transaction from './transaction.png';
 import money from './money.png';
@@ -17,6 +18,7 @@ import volue from './volue.png';
 import bell from './bell.png';
 
 export {
+    jerry,
     trash,
     save,
     edit,

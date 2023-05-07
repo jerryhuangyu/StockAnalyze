@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { transaction, money, earning, volue, olulu, bell } from "../assets";
+import { transaction, money, earning, volue, jerry, bell } from "../assets";
 import { url } from "../constants";
 import {
   TransactionHistoryTable,
@@ -62,13 +62,13 @@ const PersonalProfile = () => {
     <div className="flex justify-between">
       <div className="flex gap-6">
         <img
-          src={olulu}
+          src={jerry}
           alt="member"
           className="w-[60px] object-cover aspect-square rounded-full"
         />
         <div>
           <p className="text-primary-300">Hello, good morning!</p>
-          <p>Olulu Chen</p>
+          <p>Jerry Huang</p>
         </div>
       </div>
       <div className="flex items-center">

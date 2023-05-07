@@ -4,7 +4,7 @@ import db from '../databases/mysql.js';
 const stocksRouter = express.Router();
 
 stocksRouter.get('/', (req, res) => {
-    const query = "SELECT * FROM olulu;";
+    const query = "SELECT * FROM olulu ORDER BY id DESC;";
 
     db.query(query, (err, data) => {
         if (err) return res.json(err);

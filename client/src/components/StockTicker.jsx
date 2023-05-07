@@ -1,65 +1,66 @@
 import React from "react";
 
+// TODO: 串接ＡＰＩ
 const stockList = [
   {
-    symbol: "TSLA",
-    change: 5.5,
+    symbol: "MSFT",
+    change: 1.72,
   },
   {
-    symbol: "APPL",
-    change: 4.69,
+    symbol: "INTC",
+    change: -0.8,
+  },
+  {
+    symbol: "T",
+    change: 1.30,
+  },
+  {
+    symbol: "MCD",
+    change: 0.49,
+  },
+  {
+    symbol: "KO",
+    change: 0.47,
+  },
+  {
+    symbol: "NFLX",
+    change: 0.62,
+  },
+  {
+    symbol: "SBUX",
+    change: 2.38,
+  },
+  {
+    symbol: "COST",
+    change: 1.78,
   },
   {
     symbol: "NVDA",
     change: 4.06,
   },
   {
-    symbol: "DIS",
-    change: 3.15,
+    symbol: "DWAC",
+    change: -0.46,
+  },
+  {
+    symbol: "QQQ",
+    change: 2.13,
   },
   {
     symbol: "META",
-    change: -0.8,
+    change: -0.32,
   },
   {
-    symbol: "6",
-    change: 5.5,
-  },
-  {
-    symbol: "APPL",
+    symbol: "AAPL",
     change: 4.69,
-  },
-  {
-    symbol: "NVDA",
-    change: 4.06,
   },
   {
     symbol: "DIS",
     change: 3.15,
   },
   {
-    symbol: "10",
-    change: -0.8,
-  },
-  {
-    symbol: "11",
-    change: -5.5,
-  },
-  {
-    symbol: "APPL",
-    change: 4.69,
-  },
-  {
-    symbol: "NVDA",
-    change: 4.06,
-  },
-  {
-    symbol: "DIS",
-    change: 3.15,
-  },
-  {
-    symbol: "15",
-    change: -0.8,
+    symbol: "SPY",
+    change: 1.85,
   },
 ];
 

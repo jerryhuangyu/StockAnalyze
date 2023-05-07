@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Add, Home, Update, Symbol } from "./pages";
-import { Chart, Navbar, StockTicker } from "./components";
+import { Chart, Footer, Navbar, StockTicker } from "./components";
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
           </Route>
         </Routes>
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }

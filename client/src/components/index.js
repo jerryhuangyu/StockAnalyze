@@ -5,6 +5,7 @@ import Chart from "./Chart";
 import Navbar from "./Navbar";
 import HomeCard from "./HomeCard";
 import StockTicker from "./StockTicker";
+import Footer from "./Footer";
 
 export {
     TransactionHistoryTable,
@@ -14,4 +15,5 @@ export {
     Navbar,
     HomeCard,
     StockTicker,
+    Footer,
 }

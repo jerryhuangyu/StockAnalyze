@@ -106,7 +106,6 @@ const Home = () => {
           fetchAllStocks={fetchAllStocks}
         />
       </div>
-      <div>footer</div>
     </>
   );
 };

@@ -37,10 +37,10 @@ const PersonalProfile = () => {
 };
 
 const Home = () => {
-  const { data: lastSixStocks } = useGetLastSixStocksQuery();
-  const { data: valueOfTransaction } = useGetValueOfTransactionQuery();
-  const { data: valueOfDailyVolume } = useGetValueOfDailyVolumeQuery();
-  const [trigger, allStocksData] = useLazyGetStocksQuery();
+  const { data: lastSixStocks = [] } = useGetLastSixStocksQuery();
+  const { data: valueOfTransaction = "..." } = useGetValueOfTransactionQuery();
+  const { data: valueOfDailyVolume = "..." } = useGetValueOfDailyVolumeQuery();
+  const [trigger, allStocksData = null] = useLazyGetStocksQuery();
 
   return (
     <>
@@ -64,12 +64,12 @@ const Home = () => {
       </div>
       <div className="grid sm:gap-3 gap-4 mb-3 grid-cols-1 sm:grid-cols-2 xl:w-[60%] lg:w-[70%] w-[90%] h-[400px] sm:h-[240px]">
         <HomeCard
-          header={valueOfTransaction !== undefined ? valueOfTransaction : "..."}
+          header={valueOfTransaction}
           description={"Transaction"}
           icon={transaction}
         />
         <HomeCard
-          header={valueOfDailyVolume !== undefined ? valueOfDailyVolume : "..."}
+          header={valueOfDailyVolume}
           description={"Daily Volume"}
           icon={volue}
         />
@@ -82,8 +82,8 @@ const Home = () => {
       </div>
       <div className="bg-primary-100 bg-opacity-[0.17] shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]">
         <TransactionHistoryTable
-          stocks={lastSixStocks ? lastSixStocks : []}
-          allStocks={allStocksData.isSuccess ? allStocksData.data : null}
+          stocks={lastSixStocks}
+          allStocks={allStocksData.data}
           fetchAllStocks={trigger}
         />
       </div>

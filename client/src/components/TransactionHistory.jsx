@@ -78,7 +78,6 @@ const HistoryTableList = ({ stocks }) => {
 const TransactionHistoryTable = ({
   stocks,
   allStocks,
-  setAllStocks,
   fetchAllStocks,
 }) => {
   return (
@@ -108,7 +107,7 @@ const TransactionHistoryTable = ({
       <div className="flex justify-end w-full">
         <button
           className="underline cursor-pointer pr-3 pt-3 text-primary-300"
-          onClick={() => fetchAllStocks(setAllStocks)}
+          onClick={() => fetchAllStocks()}
         >
           view all
         </button>

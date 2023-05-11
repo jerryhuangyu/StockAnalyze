@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { transaction, money, earning, volue, jerry, bell } from "../assets";
 import {
@@ -7,54 +7,13 @@ import {
   HomeCard,
   StockTicker,
 } from "../components";
-
-const fetchAllStocks = async (setStocks) => {
-  try {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL  + "stocks", {
-      method: "GET",
-    });
-    const data = await response.json();
-    setStocks(data);
-  } catch (err) {
-    // alert(err);
-  }
-};
-
-const fetchLast6Stocks = async (setStocks) => {
-  try {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL + "stocks/lastsix", {
-      method: "GET",
-    });
-    const data = await response.json();
-    setStocks(data);
-  } catch (err) {
-    // alert(err);
-  }
-};
-
-const fetchTransactionValue = async (setTransactionValue) => {
-  try {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL + "stocks/value/transaction", {
-      method: "GET",
-    });
-    const data = await response.json();
-    setTransactionValue(data[0].idcount);
-  } catch (err) {
-    // alert(err);
-  }
-};
-
-const fetchTodayVolume = async (setTransactionValue) => {
-  try {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL + "stocks/value/dailyvolume", {
-      method: "GET",
-    });
-    const data = await response.json();
-    setTransactionValue(data[0].volumecount);
-  } catch (err) {
-    // alert(err);
-  }
-};
+import {
+  useGetStocksQuery,
+  useGetLastSixStocksQuery,
+  useGetValueOfTransactionQuery,
+  useGetValueOfDailyVolumeQuery,
+  useLazyGetStocksQuery,
+} from "../services/stockRecord";
 
 const PersonalProfile = () => {
   return (
@@ -78,16 +37,10 @@ const PersonalProfile = () => {
 };
 
 const Home = () => {
-  const [last6stocks, setLast6Stocks] = useState([]);
-  const [allStocks, setAllStocks] = useState(null);
-  const [transactionValue, setTransactionValue] = useState(null);
-  const [todayVolume, setTodayVolume] = useState(null);
-
-  useEffect(() => {
-    fetchLast6Stocks(setLast6Stocks);
-    fetchTransactionValue(setTransactionValue);
-    fetchTodayVolume(setTodayVolume);
-  }, []);
+  const { data: lastSixStocks } = useGetLastSixStocksQuery();
+  const { data: valueOfTransaction } = useGetValueOfTransactionQuery();
+  const { data: valueOfDailyVolume } = useGetValueOfDailyVolumeQuery();
+  const [trigger, allStocksData] = useLazyGetStocksQuery();
 
   return (
     <>
@@ -109,26 +62,29 @@ const Home = () => {
           <span className="ml-2 text-green-400">+12%</span>
         </div>
       </div>
-      <div
-        className="grid sm:gap-3 gap-4 mb-3 grid-cols-1 sm:grid-cols-2 xl:w-[60%] lg:w-[70%] w-[90%] h-[400px] sm:h-[240px]"
-      >
+      <div className="grid sm:gap-3 gap-4 mb-3 grid-cols-1 sm:grid-cols-2 xl:w-[60%] lg:w-[70%] w-[90%] h-[400px] sm:h-[240px]">
         <HomeCard
-          header={transactionValue}
+          header={valueOfTransaction !== undefined ? valueOfTransaction : "..."}
           description={"Transaction"}
           icon={transaction}
         />
-        <HomeCard header={todayVolume} description={"Daily Volume"} icon={volue} />
-        <HomeCard header={284} description={"Injection"} icon={money} />
-        <HomeCard header={"$7802"} description={"Earning"} icon={earning} />
+        <HomeCard
+          header={valueOfDailyVolume !== undefined ? valueOfDailyVolume : "..."}
+          description={"Daily Volume"}
+          icon={volue}
+        />
+        <HomeCard header={284} description={"Total Injection"} icon={money} />
+        <HomeCard
+          header={"$7802"}
+          description={"Total Earning"}
+          icon={earning}
+        />
       </div>
-      <div
-        className="bg-primary-100 bg-opacity-[0.17] shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]"
-      >
+      <div className="bg-primary-100 bg-opacity-[0.17] shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]">
         <TransactionHistoryTable
-          stocks={last6stocks}
-          allStocks={allStocks}
-          setAllStocks={setAllStocks}
-          fetchAllStocks={fetchAllStocks}
+          stocks={lastSixStocks ? lastSixStocks : []}
+          allStocks={allStocksData.isSuccess ? allStocksData.data : null}
+          fetchAllStocks={trigger}
         />
       </div>
     </>

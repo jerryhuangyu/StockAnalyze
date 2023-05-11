@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import { transaction, money, earning, volue, jerry, bell } from "../assets";
-import { url } from "../constants";
 import {
   TransactionHistoryTable,
   GroupButton,
@@ -11,7 +10,7 @@ import {
 
 const fetchAllStocks = async (setStocks) => {
   try {
-    const response = await fetch(url.deploy + "stocks", {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL  + "stocks", {
       method: "GET",
     });
     const data = await response.json();
@@ -23,7 +22,7 @@ const fetchAllStocks = async (setStocks) => {
 
 const fetchLast6Stocks = async (setStocks) => {
   try {
-    const response = await fetch(url.deploy + "stocks/lastsix", {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + "stocks/lastsix", {
       method: "GET",
     });
     const data = await response.json();
@@ -35,7 +34,7 @@ const fetchLast6Stocks = async (setStocks) => {
 
 const fetchTransactionValue = async (setTransactionValue) => {
   try {
-    const response = await fetch(url.deploy + "stocks/value/transaction", {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + "stocks/value/transaction", {
       method: "GET",
     });
     const data = await response.json();
@@ -47,7 +46,7 @@ const fetchTransactionValue = async (setTransactionValue) => {
 
 const fetchTodayVolume = async (setTransactionValue) => {
   try {
-    const response = await fetch(url.deploy + "stocks/value/dailyvolume", {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + "stocks/value/dailyvolume", {
       method: "GET",
     });
     const data = await response.json();
@@ -111,8 +110,7 @@ const Home = () => {
         </div>
       </div>
       <div
-        className="grid sm:gap-3 gap-4 mb-3 grid-cols-1 sm:grid-cols-2
-        xl:w-[60%] lg:w-[70%] w-[90%] h-[400px] sm:h-[240px]"
+        className="grid sm:gap-3 gap-4 mb-3 grid-cols-1 sm:grid-cols-2 xl:w-[60%] lg:w-[70%] w-[90%] h-[400px] sm:h-[240px]"
       >
         <HomeCard
           header={transactionValue}
@@ -124,8 +122,7 @@ const Home = () => {
         <HomeCard header={"$7802"} description={"Earning"} icon={earning} />
       </div>
       <div
-        className="bg-primary-100 bg-opacity-[0.17] shadow-xl
-        rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]"
+        className="bg-primary-100 bg-opacity-[0.17] shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]"
       >
         <TransactionHistoryTable
           stocks={last6stocks}

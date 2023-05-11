@@ -1,11 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { GroupButton } from "../components";
-import { url } from "../constants";
 
 const fetchStockCategory = async (setCategory) => {
   try {
-    const response = await fetch(url.deploy + "stocks/category", {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL  + "stocks/category", {
       method: "GET",
     });
     const data = await response.json();
@@ -27,10 +26,9 @@ const fetchStockHistoryWithSymbol = async (
   let sellTotalQuantity = 0;
 
   try {
-    const response = await fetch(
-      url.deploy + "symbol/" + stockSymbol,
-      { method: "GET" }
-    );
+    const response = await fetch(import.meta.env.VITE_SERVER_URL  + "symbol/" + stockSymbol, {
+      method: "GET",
+    });
 
     const resDatas = await response.json();
 

@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { trash, edit } from "../assets";
-import { url } from "../constants";
 
 const HistoryTableHeader = () => {
   return (
@@ -24,7 +23,7 @@ const HistoryTableList = ({ stocks }) => {
   const navigation = useNavigate();
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(url.deploy + "stock/" + id, {
+      const response = await fetch(import.meta.env.VITE_SERVER_URL + "stock/" + id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });

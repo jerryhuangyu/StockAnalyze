@@ -7,6 +7,7 @@ import analyze from './navbar/analyze.svg'
 import analyze_dark from './navbar/analyze_dark.png'
 import home from './navbar/home.svg';
 import menu from './navbar/menu.png';
+import login from './navbar/enter.png';
 
 import olulu from './member/olulu.png';
 import jerry from './member/jerry.jpg';
@@ -31,6 +32,7 @@ export {
     earning,
     volue,
     menu,
+    login,
     olulu,
     bell,
 }

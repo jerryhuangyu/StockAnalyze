@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { bookkeep, analyze, home, menu } from "../assets";
+import { bookkeep, analyze, home, menu, login } from "../assets";
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
@@ -34,6 +34,13 @@ const Navbar = () => {
         >
           <img className="w-4 h-4" src={bookkeep} alt="bookkeep" />
           <p>Bookkeep</p>
+        </Link>
+        <Link
+          to={"/login"}
+          className="flex gap-2 items-center px-2 hover:bg-primary-300"
+        >
+          <img className="w-4 h-4" src={login} alt="login" />
+          <p>Login</p>
         </Link>
       </div>
 
@@ -76,6 +83,14 @@ const Navbar = () => {
         >
           <img className="w-4 h-4" src={bookkeep} alt="bookkeep" />
           <p>Bookkeep</p>
+        </Link>
+        <Link
+          to={"/login"}
+          className="flex gap-3 items-center px-2"
+          onClick={() => setMenuToggle(!menuToggle)}
+        >
+          <img className="w-4 h-4" src={login} alt="login" />
+          <p>Login</p>
         </Link>
       </div>
     </div>

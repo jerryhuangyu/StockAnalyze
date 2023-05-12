@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import { render } from "react-dom";
+import { Link } from "react-router-dom";
 
 const LoginOptions = () => {
   return (
@@ -24,7 +25,7 @@ const LoginWellcome = ({ user, handleSignOut }) => {
         Sign out
       </button>
       <button className="cursor-pointer bg-primary-100 h-8 w-[100px] rounded-md">
-        Home
+        <Link to="/">Home</Link>
       </button>
     </div>
   );

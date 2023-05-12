@@ -3,6 +3,19 @@ import { Link } from "react-router-dom";
 
 import { bookkeep, analyze, home, menu, login } from "../assets";
 
+const MenuLink = ({ icon, linkName, linkTo, onClick, className }) => {
+  return (
+    <Link
+      to={linkTo}
+      className={`flex gap-2 items-center px-2 ${className}`}
+      onClick={onClick}
+    >
+      <img className="w-4 h-4" src={icon} alt={linkName} />
+      <p>{linkName}</p>
+    </Link>
+  );
+};
+
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
 
@@ -14,34 +27,10 @@ const Navbar = () => {
 
       {/* menu for beyond sm */}
       <div className="sm:flex hidden">
-        <Link
-          to={"/"}
-          className="flex gap-2 items-center px-2 hover:bg-primary-300"
-        >
-          <img className="w-4 h-4" src={home} alt="home" />
-          <p>Home</p>
-        </Link>
-        <Link
-          to={"/symbol"}
-          className="flex gap-2 items-center px-2 hover:bg-primary-300"
-        >
-          <img className="w-4 h-4" src={analyze} alt="analyze" />
-          <p>Analyze</p>
-        </Link>
-        <Link
-          to={"/add"}
-          className="flex gap-2 items-center px-2 hover:bg-primary-300"
-        >
-          <img className="w-4 h-4" src={bookkeep} alt="bookkeep" />
-          <p>Bookkeep</p>
-        </Link>
-        <Link
-          to={"/login"}
-          className="flex gap-2 items-center px-2 hover:bg-primary-300"
-        >
-          <img className="w-4 h-4" src={login} alt="login" />
-          <p>Login</p>
-        </Link>
+        <MenuLink icon={home} linkName={"Home"} linkTo={"/"} />
+        <MenuLink icon={analyze} linkName={"Analyze"} linkTo={"/symbol"} />
+        <MenuLink icon={bookkeep} linkName={"Bookkeep"} linkTo={"/add"} />
+        <MenuLink icon={login} linkName={"Login"} linkTo={"/login"} />
       </div>
 
       {/* menu for sm */}
@@ -57,41 +46,37 @@ const Navbar = () => {
       <div
         className={`${
           menuToggle ? "left-0" : "left-[-100%]"
-        } absolute w-[60%] h-screen z-10 bg-primary-200 duration-700 py-10 px-12
+        } absolute w-[40%] min-w-[235px] max-w-[300px] h-screen z-10 bg-primary-200 duration-700 py-10 px-12
         flex flex-col items-start gap-3`}
       >
-        <Link
-          to={"/"}
-          className="flex gap-3 items-center px-2"
+        <MenuLink
+          icon={home}
+          linkName={"Home"}
+          linkTo={"/"}
           onClick={() => setMenuToggle(!menuToggle)}
-        >
-          <img className="w-4 h-4" src={home} alt="home" />
-          <p>Home</p>
-        </Link>
-        <Link
-          to={"/symbol"}
-          className="flex gap-3 items-center px-2"
+          className="gap-3 text-lg"
+        />
+        <MenuLink
+          icon={analyze}
+          linkName={"Analyze"}
+          linkTo={"/symbol"}
           onClick={() => setMenuToggle(!menuToggle)}
-        >
-          <img className="w-4 h-4" src={analyze} alt="analyze" />
-          <p>Analyze</p>
-        </Link>
-        <Link
-          to={"/add"}
-          className="flex gap-3 items-center px-2"
+          className="gap-3 text-lg"
+        />
+        <MenuLink
+          icon={bookkeep}
+          linkName={"Bookkeep"}
+          linkTo={"/add"}
           onClick={() => setMenuToggle(!menuToggle)}
-        >
-          <img className="w-4 h-4" src={bookkeep} alt="bookkeep" />
-          <p>Bookkeep</p>
-        </Link>
-        <Link
-          to={"/login"}
-          className="flex gap-3 items-center px-2"
+          className="gap-3 text-lg"
+        />
+        <MenuLink
+          icon={login}
+          linkName={"Login"}
+          linkTo={"/login"}
           onClick={() => setMenuToggle(!menuToggle)}
-        >
-          <img className="w-4 h-4" src={login} alt="login" />
-          <p>Login</p>
-        </Link>
+          className="gap-3 text-lg"
+        />
       </div>
     </div>
   );

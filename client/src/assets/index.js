@@ -11,6 +11,7 @@ import login from './navbar/enter.png';
 
 import olulu from './member/olulu.png';
 import jerry from './member/jerry.jpg';
+import question from './member/question.png';
 
 import transaction from './transaction.png';
 import money from './money.png';
@@ -19,6 +20,7 @@ import volue from './volue.png';
 import bell from './bell.png';
 
 export {
+    question,
     jerry,
     trash,
     save,

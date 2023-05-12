@@ -22,7 +22,7 @@ function App() {
       <Navbar />
       <div className="flex flex-col mt-1 items-center overflow-x-hidden">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home user={user}/>} />
           <Route path="/add" element={<Add />} />
           <Route path="/update/:id" element={<Update />} />
           <Route path="/symbol" element={<Symbol />}>

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
-import { transaction, money, earning, volue, jerry, bell } from "../assets";
+import { transaction, money, earning, volue, question, bell } from "../assets";
 import {
   TransactionHistoryTable,
   GroupButton,
@@ -15,18 +16,29 @@ import {
   useLazyGetStocksQuery,
 } from "../services/stockRecord";
 
-const PersonalProfile = () => {
+const LoginLink = () => (
+  <Link
+    to="/login"
+    className="cursor-pointer bg-primary-hover hover:bg-primary-out px-3 rounded-full"
+  >
+    Login Now
+  </Link>
+);
+
+const PersonalProfile = ({ picture, username }) => {
+  const src = picture ? picture : question;
+  const name = username ? username : <LoginLink />;
   return (
     <div className="flex justify-between">
       <div className="flex gap-6">
         <img
-          src={jerry}
+          src={src}
           alt="member"
           className="w-[60px] object-cover aspect-square rounded-full"
         />
         <div>
           <p className="text-primary-300">Hello, good morning!</p>
-          <p>Jerry Huang</p>
+          <p className="mt-2">{name}</p>
         </div>
       </div>
       <div className="flex items-center">
@@ -36,7 +48,7 @@ const PersonalProfile = () => {
   );
 };
 
-const Home = () => {
+const Home = ({ user }) => {
   const { data: lastSixStocks = [] } = useGetLastSixStocksQuery();
   const { data: valueOfTransaction = "..." } = useGetValueOfTransactionQuery();
   const { data: valueOfDailyVolume = "..." } = useGetValueOfDailyVolumeQuery();
@@ -48,7 +60,7 @@ const Home = () => {
         <StockTicker />
       </div>
       <div className="xl:w-[60%] lg:w-[70%] w-[90%] pt-10 pb-10">
-        <PersonalProfile />
+        <PersonalProfile username={user.name} picture={user.picture} />
       </div>
       <div className="h-[200px] flex flex-col items-center">
         <p className="text-primary-300">Available Balance</p>

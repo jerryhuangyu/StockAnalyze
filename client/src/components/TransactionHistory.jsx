@@ -79,9 +79,10 @@ const TransactionHistoryTable = ({
   stocks,
   allStocks,
   fetchAllStocks,
+  id,
 }) => {
   return (
-    <>
+    <div id={id}>
       {/* title */}
       <div className="flex justify-between pb-6">
         <h2 className="text-primary-300 font-bold text-3xl">Recent Orders</h2>
@@ -112,7 +113,7 @@ const TransactionHistoryTable = ({
           view all
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

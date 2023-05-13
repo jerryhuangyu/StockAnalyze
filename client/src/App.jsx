@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import jwt_decode from "jwt-decode";
+import Driver from "driver.js";
+import "driver.js/dist/driver.min.css";
 
 import { Add, Home, Update, Symbol, Login } from "./pages";
 import { Chart, Footer, Navbar, StockTicker } from "./components";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { steps } from "./constants";
 
 function App() {
   const [user, setUser] = useState({});
-
-  const handleSignOut = (e) => {
-    setUser({});
-    document.getElementById("signInDiv").hidden = false;
-  };
+  const driver = new Driver();
   useEffect(() => {
-    // global google
+    driver.defineSteps(steps);
+    try {
+      driver.start();
+    } catch (error) {
+      console.log("can't find element for driver");
+    }
   }, []);
 
   return (
@@ -22,7 +26,7 @@ function App() {
       <Navbar />
       <div className="flex flex-col mt-1 items-center overflow-x-hidden">
         <Routes>
-          <Route path="/" element={<Home user={user}/>} />
+          <Route path="/" element={<Home user={user} />} />
           <Route path="/add" element={<Add />} />
           <Route path="/update/:id" element={<Update />} />
           <Route path="/symbol" element={<Symbol />}>

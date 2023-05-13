@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 
 import { bookkeep, analyze, home, menu, login } from "../assets";
 
-const MenuLink = ({ icon, linkName, linkTo, onClick, className }) => {
+const MenuLink = ({ icon, linkName, linkTo, onClick, className, id }) => {
   return (
     <Link
       to={linkTo}
       className={`flex gap-2 items-center px-2 ${className}`}
       onClick={onClick}
+      id={id}
     >
       <img className="w-4 h-4" src={icon} alt={linkName} />
       <p>{linkName}</p>
@@ -28,8 +29,18 @@ const Navbar = () => {
       {/* menu for beyond sm */}
       <div className="sm:flex hidden">
         <MenuLink icon={home} linkName={"Home"} linkTo={"/"} />
-        <MenuLink icon={analyze} linkName={"Analyze"} linkTo={"/symbol"} />
-        <MenuLink icon={bookkeep} linkName={"Bookkeep"} linkTo={"/add"} />
+        <MenuLink
+          icon={analyze}
+          linkName={"Analyze"}
+          linkTo={"/symbol"}
+          id="step-three"
+        />
+        <MenuLink
+          icon={bookkeep}
+          linkName={"Bookkeep"}
+          linkTo={"/add"}
+          id="step-four"
+        />
         <MenuLink icon={login} linkName={"Login"} linkTo={"/login"} />
       </div>
 

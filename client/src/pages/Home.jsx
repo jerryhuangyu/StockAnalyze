@@ -29,7 +29,7 @@ const PersonalProfile = ({ picture, username }) => {
   const src = picture ? picture : question;
   const name = username ? username : <LoginLink />;
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between" id="step-one">
       <div className="flex gap-6">
         <img
           src={src}
@@ -59,7 +59,7 @@ const Home = ({ user }) => {
       <div className="w-full">
         <StockTicker />
       </div>
-      <div className="xl:w-[60%] lg:w-[70%] w-[90%] pt-10 pb-10">
+      <div className="xl:w-[60%] lg:w-[70%] w-[90%] pt-10 pb-10" id="first-element-introduction">
         <PersonalProfile username={user.name} picture={user.picture} />
       </div>
       <div className="h-[200px] flex flex-col items-center">
@@ -97,6 +97,7 @@ const Home = ({ user }) => {
           stocks={lastSixStocks}
           allStocks={allStocksData.data}
           fetchAllStocks={trigger}
+          id="step-two"
         />
       </div>
     </>

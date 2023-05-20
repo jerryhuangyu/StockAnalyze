@@ -48,6 +48,15 @@ const PersonalProfile = ({ picture, username }) => {
   );
 };
 
+const BackgroundCover = () => (
+  <div
+    className="fixed top-0 invert w-full h-full -z-20 opacity-25"
+    style={{ backgroundImage: "url(/grid.svg)" }}
+  >
+    <div className="background_gradient" />
+  </div>
+);
+
 const Home = ({ user }) => {
   const { data: lastSixStocks = [] } = useGetLastSixStocksQuery();
   const { data: valueOfTransaction = "..." } = useGetValueOfTransactionQuery();
@@ -56,10 +65,14 @@ const Home = ({ user }) => {
 
   return (
     <>
+      <BackgroundCover />
       <div className="w-full">
         <StockTicker />
       </div>
-      <div className="xl:w-[60%] lg:w-[70%] w-[90%] pt-10 pb-10" id="first-element-introduction">
+      <div
+        className="xl:w-[60%] lg:w-[70%] w-[90%] pt-10 pb-10"
+        id="first-element-introduction"
+      >
         <PersonalProfile username={user.name} picture={user.picture} />
       </div>
       <div className="h-[200px] flex flex-col items-center">
@@ -92,7 +105,7 @@ const Home = ({ user }) => {
           icon={earning}
         />
       </div>
-      <div className="bg-primary-100 bg-opacity-[0.17] shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]">
+      <div className="bg-stone-50 shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]">
         <TransactionHistoryTable
           stocks={lastSixStocks}
           allStocks={allStocksData.data}

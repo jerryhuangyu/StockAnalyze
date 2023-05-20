@@ -1,5 +1,7 @@
 # Stock Insight App
 
+![webpage](/images/webpage.png)
+
 ## Technology
 
 ### stack

@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import { trash, edit } from "../assets";
 
@@ -23,10 +25,13 @@ const HistoryTableList = ({ stocks }) => {
   const navigation = useNavigate();
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(import.meta.env.VITE_SERVER_URL + "stock/" + id, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await fetch(
+        import.meta.env.VITE_SERVER_URL + "stock/" + id,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       const data = await response.json();
       alert(data);
       window.location.reload();
@@ -75,12 +80,51 @@ const HistoryTableList = ({ stocks }) => {
   );
 };
 
-const TransactionHistoryTable = ({
-  stocks,
-  allStocks,
-  fetchAllStocks,
-  id,
-}) => {
+const HistoryTableListSkeleton = ({ count }) => {
+  return (
+    <tbody>
+      {Array(count)
+        .fill(0)
+        .map((_, id) => (
+          <tr className="border-b-[1px] z-10" key={id}>
+            <td>
+              <Skeleton height="30px" />
+            </td>
+            <td>
+              <Skeleton height="30px" />
+            </td>
+            <td>
+              <Skeleton height="30px" />
+            </td>
+            <td className={`hidden lg:table-cell`}>
+              <Skeleton height="30px" />
+            </td>
+            <td className={`hidden md:table-cell`}>
+              <Skeleton height="30px" />
+            </td>
+            <td>
+              <Skeleton height="30px" />
+            </td>
+            <td>
+              <Skeleton height="30px" />
+            </td>
+          </tr>
+        ))}
+    </tbody>
+  );
+};
+
+const TransactionHistoryTable = ({ stocks, allStocks, fetchAllStocks, id }) => {
+  console.log('hi')
+  let historyTableList;
+  if (allStocks) {
+    historyTableList = <HistoryTableList stocks={allStocks} />;
+  } else if (stocks) {
+    historyTableList = <HistoryTableList stocks={stocks} />;
+  } else {
+    historyTableList = <HistoryTableListSkeleton count={4} />;
+  }
+
   return (
     <div id={id}>
       {/* title */}
@@ -99,11 +143,7 @@ const TransactionHistoryTable = ({
       {/* table */}
       <table className="text-black rounded-lg w-full">
         <HistoryTableHeader />
-        {allStocks ? (
-          <HistoryTableList stocks={allStocks} />
-        ) : (
-          <HistoryTableList stocks={stocks} />
-        )}
+        {historyTableList}
       </table>
       <div className="flex justify-end w-full">
         <button

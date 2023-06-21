@@ -58,7 +58,7 @@ const BackgroundCover = () => (
 );
 
 const Home = ({ user }) => {
-  const { data: lastSixStocks = [] } = useGetLastSixStocksQuery();
+  const { data: lastSixStocks = null } = useGetLastSixStocksQuery();
   const { data: valueOfTransaction = "..." } = useGetValueOfTransactionQuery();
   const { data: valueOfDailyVolume = "..." } = useGetValueOfDailyVolumeQuery();
   const [trigger, allStocksData = null] = useLazyGetStocksQuery();

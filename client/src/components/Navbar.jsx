@@ -17,8 +17,10 @@ const MenuLink = ({ icon, linkName, linkTo, onClick, className, id }) => {
   );
 };
 
-const Navbar = () => {
+const Navbar = ({user}) => {
   const [menuToggle, setMenuToggle] = useState(false);
+  const isLogin = Object.keys(user).length;
+  const loginString = isLogin ? "Logout" : "Login"
 
   return (
     <div className="flex justify-between px-[5%] lg:px-10 h-[60px] bg-primary-50 ">
@@ -41,7 +43,7 @@ const Navbar = () => {
           linkTo={"/add"}
           id="step-four"
         />
-        <MenuLink icon={login} linkName={"Login"} linkTo={"/login"} />
+        <MenuLink icon={login} linkName={loginString} linkTo={"/login"} />
       </div>
 
       {/* menu for sm */}

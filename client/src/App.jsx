@@ -28,7 +28,7 @@ function App() {
   return (
     <BrowserRouter>
     <SkeletonTheme baseColor="#a9a9a9" highlightColor="#888">
-      <Navbar />
+      <Navbar user={user}/>
       <div className="flex flex-col mt-1 items-center overflow-x-hidden">
         <Routes>
           <Route path="/" element={<Home user={user} />} />

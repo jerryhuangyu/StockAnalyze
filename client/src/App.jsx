@@ -5,6 +5,7 @@ import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import jwt_decode from "jwt-decode";
 import Driver from "driver.js";
 import "driver.js/dist/driver.min.css";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 import { Add, Home, Update, Symbol, Login } from "./pages";
 import { Chart, Footer, Navbar, StockTicker } from "./components";
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <SkeletonTheme baseColor="#a9a9a9" highlightColor="#888">
       <Navbar />
       <div className="flex flex-col mt-1 items-center overflow-x-hidden">
         <Routes>
@@ -38,10 +40,11 @@ function App() {
           <Route
             path="/login"
             element={<Login user={user} setUser={setUser} />}
-          />
+            />
         </Routes>
       </div>
       <Footer />
+    </SkeletonTheme>
     </BrowserRouter>
   );
 }

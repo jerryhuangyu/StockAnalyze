@@ -39,7 +39,7 @@ function App() {
 
   return (
     <BrowserRouter>
-    <SkeletonTheme baseColor="#a9a9a9" highlightColor="#888">
+    <SkeletonTheme baseColor="#ebebe8" highlightColor="#dadad8">
       <Navbar user={user} showOnboardGuide={showOnboardGuide} driver={driver}/>
       <div className="flex flex-col mt-1 items-center overflow-x-hidden">
         <Routes>

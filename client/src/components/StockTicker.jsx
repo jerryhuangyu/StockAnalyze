@@ -1,70 +1,82 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useGetSymbolQuery } from "../services/finnhubStock";
 
-// TODO: 串接ＡＰＩ
 const stockList = [
   {
     symbol: "MSFT",
-    change: 1.72,
+    change: "",
   },
   {
     symbol: "INTC",
-    change: -0.8,
+    change: "",
   },
   {
     symbol: "T",
-    change: 1.30,
+    change: "",
   },
   {
     symbol: "MCD",
-    change: 0.49,
+    change: "",
   },
   {
     symbol: "KO",
-    change: 0.47,
+    change: "",
   },
   {
     symbol: "NFLX",
-    change: 0.62,
+    change: "",
   },
   {
     symbol: "SBUX",
-    change: 2.38,
+    change: "",
   },
   {
     symbol: "COST",
-    change: 1.78,
+    change: "",
   },
   {
     symbol: "NVDA",
-    change: 4.06,
+    change: "",
   },
   {
     symbol: "DWAC",
-    change: -0.46,
+    change: "",
   },
   {
     symbol: "QQQ",
-    change: 2.13,
+    change: "",
   },
   {
     symbol: "META",
-    change: -0.32,
+    change: "",
   },
   {
     symbol: "AAPL",
-    change: 4.69,
+    change: "",
   },
   {
     symbol: "DIS",
-    change: 3.15,
+    change: "",
   },
   {
     symbol: "SPY",
-    change: 1.85,
+    change: "",
   },
-];
+]
+
+const updateStocks = (data) => {
+  data.forEach((stock) => {
+    const {data} = useGetSymbolQuery(stock.symbol);
+    if (data) {
+      let dataChange = (data?.d/data?.c*100).toFixed(2)
+      stock.change = dataChange
+    }
+  })
+}
 
 const StockTicker = () => {
+  updateStocks(stockList);
+
   const TickerObject = ({ tickers }) => {
     return (
       <>

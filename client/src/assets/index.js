@@ -8,9 +8,8 @@ import analyze_dark from './navbar/analyze_dark.png'
 import home from './navbar/home.svg';
 import menu from './navbar/menu.png';
 import login from './navbar/enter.png';
+import guide from './navbar/guide.png';
 
-import olulu from './member/olulu.png';
-import jerry from './member/jerry.jpg';
 import question from './member/question.png';
 
 import transaction from './transaction.png';
@@ -21,7 +20,6 @@ import bell from './bell.png';
 
 export {
     question,
-    jerry,
     trash,
     save,
     edit,
@@ -35,6 +33,6 @@ export {
     volue,
     menu,
     login,
-    olulu,
+    guide,
     bell,
 }

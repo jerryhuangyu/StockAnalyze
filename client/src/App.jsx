@@ -15,13 +15,21 @@ function App() {
   const isSmall = useMediaQuery("(max-width: 640px)");
   const [user, setUser] = useState({});
   const driver = new Driver();
+  
   useEffect(() => {
     const driverSteps = isSmall ? steps.slice(0, 2) : steps;
     driver.defineSteps(driverSteps);
-    try {
-      driver.start();
-    } catch (error) {
-      console.log("can't find element for driver");
+    if (!localStorage.getItem('isOnboardSinsight')){
+      console.log("disable onboard guild")
+      try {
+        driver.start();
+        localStorage.setItem('isOnboardSinsight', true)
+        setInterval(() => {
+          localStorage.removeItem('isOnboardSinsight');
+        }, 86400000)
+      } catch (error) {
+        console.log("can't find element for driver");
+      }
     }
   }, []);
 

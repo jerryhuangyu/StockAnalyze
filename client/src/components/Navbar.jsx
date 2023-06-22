@@ -85,7 +85,7 @@ const Navbar = ({user}) => {
         />
         <MenuLink
           icon={login}
-          linkName={"Login"}
+          linkName={loginString}
           linkTo={"/login"}
           onClick={() => setMenuToggle(!menuToggle)}
           className="gap-3 text-lg"

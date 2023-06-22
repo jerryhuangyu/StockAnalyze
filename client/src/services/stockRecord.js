@@ -1,23 +1,24 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from './baseApi';
 
-export const stockRecordApi = createApi({
-    reducerPath: 'stockRecordApi',
-    baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_URL }),
+const endpointUrl = import.meta.env.VITE_SERVER_URL;
+
+const stockRecordApi = baseApi.injectEndpoints({
     // tagTypes: [''],
     endpoints: (builder) => ({
         getStocks: builder.query({
-            query: () => 'stocks',
+            query: () => `${endpointUrl}stocks`,
             // providesTags: [''],
         }),
         getLastSixStocks: builder.query({
-            query: () => "stocks/lastsix",
+            query: () => `${endpointUrl}stocks/lastsix`,
         }),
         getValueOfTransaction: builder.query({
-            query: () => "stocks/value/transaction",
+            query: () => `${endpointUrl}stocks/value/transaction`,
             transformResponse: res => res[0].idcount
         }),
         getValueOfDailyVolume: builder.query({
-            query: () => "stocks/value/dailyvolume",
+            query: () => `${endpointUrl}stocks/value/dailyvolume`,
             transformResponse: res => res[0].volumecount
         }),
     })

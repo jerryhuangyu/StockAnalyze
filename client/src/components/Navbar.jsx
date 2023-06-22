@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { bookkeep, analyze, home, menu, login } from "../assets";
+import { bookkeep, analyze, home, menu, login, guide } from "../assets";
 
 const MenuLink = ({ icon, linkName, linkTo, onClick, className, id }) => {
   return (
@@ -17,10 +17,10 @@ const MenuLink = ({ icon, linkName, linkTo, onClick, className, id }) => {
   );
 };
 
-const Navbar = ({user}) => {
+const Navbar = ({ user, showOnboardGuide, driver }) => {
   const [menuToggle, setMenuToggle] = useState(false);
   const isLogin = Object.keys(user).length;
-  const loginString = isLogin ? "Logout" : "Login"
+  const loginString = isLogin ? "Logout" : "Login";
 
   return (
     <div className="flex justify-between px-[5%] lg:px-10 h-[60px] bg-primary-50 ">
@@ -42,6 +42,11 @@ const Navbar = ({user}) => {
           linkName={"Bookkeep"}
           linkTo={"/add"}
           id="step-four"
+        />
+        <MenuLink
+          icon={guide}
+          linkName={"Guide Me"}
+          onClick={() => showOnboardGuide(driver)}
         />
         <MenuLink icon={login} linkName={loginString} linkTo={"/login"} />
       </div>
@@ -81,6 +86,15 @@ const Navbar = ({user}) => {
           linkName={"Bookkeep"}
           linkTo={"/add"}
           onClick={() => setMenuToggle(!menuToggle)}
+          className="gap-3 text-lg"
+        />
+        <MenuLink
+          icon={guide}
+          linkName={"Guide Me"}
+          onClick={() => {
+            setMenuToggle(!menuToggle);
+            showOnboardGuide(driver);
+          }}
           className="gap-3 text-lg"
         />
         <MenuLink

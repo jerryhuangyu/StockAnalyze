@@ -15,28 +15,32 @@ function App() {
   const isSmall = useMediaQuery("(max-width: 640px)");
   const [user, setUser] = useState({});
   const driver = new Driver();
-  
+
+  const showOnboardGuide = (driver) => {
+    try {
+      driver.start();
+      localStorage.setItem('isOnboardSinsight', true)
+      setInterval(() => {
+        localStorage.removeItem('isOnboardSinsight');
+      }, 86400000)
+    } catch (error) {
+      console.log("can't find element for driver");
+    }
+  }
+
   useEffect(() => {
     const driverSteps = isSmall ? steps.slice(0, 2) : steps;
     driver.defineSteps(driverSteps);
     if (!localStorage.getItem('isOnboardSinsight')){
-      console.log("disable onboard guild")
-      try {
-        driver.start();
-        localStorage.setItem('isOnboardSinsight', true)
-        setInterval(() => {
-          localStorage.removeItem('isOnboardSinsight');
-        }, 86400000)
-      } catch (error) {
-        console.log("can't find element for driver");
-      }
+      console.log("disable onboard guide");
+      showOnboardGuide(driver);
     }
   }, []);
 
   return (
     <BrowserRouter>
     <SkeletonTheme baseColor="#a9a9a9" highlightColor="#888">
-      <Navbar user={user}/>
+      <Navbar user={user} showOnboardGuide={showOnboardGuide} driver={driver}/>
       <div className="flex flex-col mt-1 items-center overflow-x-hidden">
         <Routes>
           <Route path="/" element={<Home user={user} />} />

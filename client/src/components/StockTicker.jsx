@@ -88,7 +88,7 @@ const StockTicker = () => {
                 stock.change > 0
                   ? "text-green-500 bg-green-100"
                   : "text-red-500 bg-red-100"
-              } rounded px-1 w-16`}
+              } rounded px-1 w-16 text-center`}
             >
               {stock.change > 0 ? "+" : ""}
               {stock.change}%

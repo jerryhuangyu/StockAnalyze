@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { stockRecordApi } from './services/stockRecord'
+import { baseApi } from './services/baseApi'
 
 export const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
-    [stockRecordApi.reducerPath]: stockRecordApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(stockRecordApi.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware),
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

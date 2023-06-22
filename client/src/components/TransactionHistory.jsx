@@ -115,7 +115,6 @@ const HistoryTableListSkeleton = ({ count }) => {
 };
 
 const TransactionHistoryTable = ({ stocks, allStocks, fetchAllStocks, id }) => {
-  console.log('hi')
   let historyTableList;
   if (allStocks) {
     historyTableList = <HistoryTableList stocks={allStocks} />;

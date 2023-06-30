@@ -46,7 +46,10 @@ const Navbar = ({ user, showOnboardGuide, driver }) => {
         <MenuLink
           icon={guide}
           linkName={"Guide Me"}
-          onClick={() => showOnboardGuide(driver)}
+          onClick={(e) => {
+            showOnboardGuide(driver);
+            e.stopPropagation();
+          }}
         />
         <MenuLink icon={login} linkName={loginString} linkTo={"/login"} />
       </div>
@@ -91,9 +94,10 @@ const Navbar = ({ user, showOnboardGuide, driver }) => {
         <MenuLink
           icon={guide}
           linkName={"Guide Me"}
-          onClick={() => {
+          onClick={(e) => {
             setMenuToggle(!menuToggle);
             showOnboardGuide(driver);
+            e.stopPropagation()
           }}
           className="gap-3 text-lg"
         />

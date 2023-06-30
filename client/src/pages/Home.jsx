@@ -105,12 +105,11 @@ const Home = ({ user }) => {
           icon={earning}
         />
       </div>
-      <div className="bg-stone-50 shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]">
+      <div className="bg-stone-50 shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]" id="step-two">
         <TransactionHistoryTable
           stocks={lastSixStocks}
           allStocks={allStocksData.data}
           fetchAllStocks={trigger}
-          id="step-two"
         />
       </div>
     </>

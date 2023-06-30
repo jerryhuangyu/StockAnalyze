@@ -21,7 +21,11 @@ const stockRecordApi = baseApi.injectEndpoints({
             query: () => `${endpointUrl}stocks/value/dailyvolume`,
             transformResponse: res => res[0].volumecount
         }),
+        getStocksCategory: builder.query({
+            query: () => `${endpointUrl}stocks/category`,
+            // transformResponse: res => res[0].volumecount
+        }),
     })
 })
 
-export const { useGetStocksQuery, useLazyGetStocksQuery,  useGetLastSixStocksQuery, useGetValueOfTransactionQuery, useGetValueOfDailyVolumeQuery } = stockRecordApi;
+export const { useGetStocksQuery, useLazyGetStocksQuery,  useGetLastSixStocksQuery, useGetValueOfTransactionQuery, useGetValueOfDailyVolumeQuery, useGetStocksCategoryQuery } = stockRecordApi;

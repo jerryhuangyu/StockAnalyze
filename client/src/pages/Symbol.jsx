@@ -1,18 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { GroupButton } from "../components";
-
-const fetchStockCategory = async (setCategory) => {
-  try {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL  + "stocks/category", {
-      method: "GET",
-    });
-    const data = await response.json();
-    setCategory(data);
-  } catch (err) {
-    alert(err);
-  }
-};
+import { useGetStocksCategoryQuery } from "../services/stockRecord";
 
 const fetchStockHistoryWithSymbol = async (
   stockSymbol,
@@ -26,9 +15,12 @@ const fetchStockHistoryWithSymbol = async (
   let sellTotalQuantity = 0;
 
   try {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL  + "symbol/" + stockSymbol, {
-      method: "GET",
-    });
+    const response = await fetch(
+      import.meta.env.VITE_SERVER_URL + "symbol/" + stockSymbol,
+      {
+        method: "GET",
+      }
+    );
 
     const resDatas = await response.json();
 
@@ -59,18 +51,12 @@ const fetchStockHistoryWithSymbol = async (
 };
 
 const Symbol = () => {
-  const [category, setCategory] = useState([]);
+  const { data: category = [] } = useGetStocksCategoryQuery();
   const [stockSymbol, setStockSymbol] = useState();
 
   const [stockHistoryDatas, setStockHistoryDatas] = useState([]);
   const [buyStockAverage, setBuyStockAverage] = useState(0.0);
   const [sellStockAverage, setSellStockAverage] = useState(0.0);
-
-  console.log("render symbol " + stockSymbol);
-
-  useEffect(() => {
-    fetchStockCategory(setCategory);
-  }, []);
 
   useEffect(() => {
     fetchStockHistoryWithSymbol(
@@ -83,12 +69,11 @@ const Symbol = () => {
 
   return (
     <div className="w-[450px]">
-      <div className="w-full flex justify-center">個股觀察</div>
+      <div className="w-full flex justify-center mt-5">個股觀察</div>
       <div className="h-20 w-full flex items-center justify-center">
         <GroupButton names={category} />
       </div>
-      <div className="w-full h-[330px] flex-col flex justify-between items-center bg-stone-100 rounded-lg">
-        <div>header</div>
+      <div className="w-full h-[330px] flex-col flex justify-center items-center bg-stone-100 rounded-lg">
         <div>
           <Outlet
             context={{
@@ -98,6 +83,15 @@ const Symbol = () => {
               stockSymbol: [stockSymbol, setStockSymbol],
             }}
           />
+          {stockSymbol ? (
+            <div className=" text-center tracking-wider font-light text-sm">
+              您的 {stockSymbol} 的買賣歷史
+            </div>
+          ) : (
+            <div className=" text-center tracking-wider font-light text-sm">
+              點選您想觀察的股票
+            </div>
+          )}
         </div>
       </div>
     </div>

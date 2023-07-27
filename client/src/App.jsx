@@ -32,7 +32,6 @@ function App() {
     const driverSteps = isSmall ? steps.slice(0, 2) : steps;
     driver.defineSteps(driverSteps);
     if (!localStorage.getItem('isOnboardSinsight')){
-      console.log("disable onboard guide");
       showOnboardGuide(driver);
     }
   }, []);

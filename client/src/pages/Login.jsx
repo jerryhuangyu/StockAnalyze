@@ -13,7 +13,6 @@ const LoginOptions = () => {
 };
 
 const LoginWellcome = ({ user, handleSignOut }) => {
-  // console.log(user);
   return (
     <div className="w-full flex flex-col gap-3 items-center">
       <img src={user.picture} alt="user" className="w-20 aspect-square" />

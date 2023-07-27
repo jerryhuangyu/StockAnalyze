@@ -46,7 +46,6 @@ const Add = () => {
     }
   }
 
-  // console.log(stock);
   return (
     <StockForm
       title={title}

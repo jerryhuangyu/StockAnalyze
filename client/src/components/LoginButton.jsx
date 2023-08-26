@@ -3,7 +3,9 @@ import { login } from "../assets";
 
 const LoginButton = ({ className = "", onClick = () => {} }) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
-  const handleOnClick = isAuthenticated ? logout : loginWithRedirect;
+  const handleOnClick = isAuthenticated
+    ? () => logout({ logoutParams: { returnTo: window.location.origin } })
+    : loginWithRedirect;
   const buttonTitle = isAuthenticated ? "Log Out" : "Log In";
   return (
     <div

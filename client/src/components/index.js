@@ -6,6 +6,8 @@ import Navbar from "./Navbar";
 import HomeCard from "./HomeCard";
 import StockTicker from "./StockTicker";
 import Footer from "./Footer";
+import LoginButton from "./LoginButton";
+import NavbarLink from "./NavbarLink";
 
 export {
     TransactionHistoryTable,
@@ -16,4 +18,6 @@ export {
     HomeCard,
     StockTicker,
     Footer,
+    LoginButton,
+    NavbarLink,
 }

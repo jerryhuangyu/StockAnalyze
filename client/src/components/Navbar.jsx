@@ -1,26 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
-import { bookkeep, analyze, home, menu, login, guide } from "../assets";
+import { LoginButton, NavbarLink } from "./";
+import { bookkeep, analyze, home, menu, guide } from "../assets";
 
-const MenuLink = ({ icon, linkName, linkTo, onClick, className, id }) => {
-  return (
-    <Link
-      to={linkTo}
-      className={`flex gap-2 items-center px-2 ${className}`}
-      onClick={onClick}
-      id={id}
-    >
-      <img className="w-4 h-4" src={icon} alt={linkName} />
-      <p>{linkName}</p>
-    </Link>
-  );
-};
-
-const Navbar = ({ user, showOnboardGuide, driver }) => {
+const Navbar = ({ showOnboardGuide, driver }) => {
+  const { user } = useAuth0();
   const [menuToggle, setMenuToggle] = useState(false);
-  const isLogin = Object.keys(user).length;
-  const loginString = isLogin ? "Logout" : "Login";
 
   return (
     <div className="flex justify-between px-[5%] lg:px-10 h-[60px] bg-primary-50 ">
@@ -30,28 +17,29 @@ const Navbar = ({ user, showOnboardGuide, driver }) => {
 
       {/* menu for beyond sm */}
       <div className="sm:flex hidden">
-        <MenuLink icon={home} linkName={"Home"} linkTo={"/"} />
-        <MenuLink
+        <NavbarLink icon={home} linkName={"Home"} linkTo={"/"} />
+        <NavbarLink
           icon={analyze}
           linkName={"Analyze"}
           linkTo={"/symbol"}
           id="step-three"
         />
-        <MenuLink
+        <NavbarLink
           icon={bookkeep}
           linkName={"Bookkeep"}
           linkTo={"/add"}
           id="step-four"
         />
-        <MenuLink
+        <NavbarLink
           icon={guide}
           linkName={"Guide Me"}
+          linkTo={"/"}
           onClick={(e) => {
             showOnboardGuide(driver);
             e.stopPropagation();
           }}
         />
-        <MenuLink icon={login} linkName={loginString} linkTo={"/login"} />
+        <LoginButton />
       </div>
 
       {/* menu for sm */}
@@ -70,43 +58,40 @@ const Navbar = ({ user, showOnboardGuide, driver }) => {
         } absolute w-[40%] min-w-[235px] max-w-[300px] h-screen z-10 bg-primary-200 duration-700 py-10 px-12
         flex flex-col items-start gap-3`}
       >
-        <MenuLink
+        <NavbarLink
           icon={home}
           linkName={"Home"}
           linkTo={"/"}
           onClick={() => setMenuToggle(!menuToggle)}
           className="gap-3 text-lg"
         />
-        <MenuLink
+        <NavbarLink
           icon={analyze}
           linkName={"Analyze"}
           linkTo={"/symbol"}
           onClick={() => setMenuToggle(!menuToggle)}
           className="gap-3 text-lg"
         />
-        <MenuLink
+        <NavbarLink
           icon={bookkeep}
           linkName={"Bookkeep"}
           linkTo={"/add"}
           onClick={() => setMenuToggle(!menuToggle)}
           className="gap-3 text-lg"
         />
-        <MenuLink
+        <NavbarLink
           icon={guide}
           linkName={"Guide Me"}
           onClick={(e) => {
             setMenuToggle(!menuToggle);
             showOnboardGuide(driver);
-            e.stopPropagation()
+            e.stopPropagation();
           }}
           className="gap-3 text-lg"
         />
-        <MenuLink
-          icon={login}
-          linkName={loginString}
-          linkTo={"/login"}
-          onClick={() => setMenuToggle(!menuToggle)}
+        <LoginButton
           className="gap-3 text-lg"
+          onClick={() => setMenuToggle(!menuToggle)}
         />
       </div>
     </div>

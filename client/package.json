@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.1",
     "@reduxjs/toolkit": "^1.9.5",
     "beautiful-react-hooks": "^4.3.0",
     "driver.js": "^0.9.8",

@@ -43,10 +43,12 @@ const stockRecordApi = baseApi.injectEndpoints({
     getValueOfTransaction: builder.query({
       query: () => `${endpointUrl}stocks/value/transaction`,
       transformResponse: (res) => res[0].idcount,
+      providesTags: ["stock"],
     }),
     getValueOfDailyVolume: builder.query({
       query: () => `${endpointUrl}stocks/value/dailyvolume`,
       transformResponse: (res) => res[0].volumecount,
+      providesTags: ["stock"],
     }),
     getStocksCategory: builder.query({
       query: () => `${endpointUrl}stocks/category`,

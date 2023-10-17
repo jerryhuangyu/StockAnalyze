@@ -1,19 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { transaction, money, earning, volue, question, bell } from "../assets";
+import { TransactionHistoryTable, HomeCard, StockTicker } from "../components";
 import {
-  TransactionHistoryTable,
-  GroupButton,
-  HomeCard,
-  StockTicker,
-} from "../components";
-import {
-  useGetStocksQuery,
-  useGetLastSixStocksQuery,
   useGetValueOfTransactionQuery,
   useGetValueOfDailyVolumeQuery,
-  useLazyGetStocksQuery,
 } from "../services/stockRecord";
 
 const LoginLink = () => (
@@ -58,10 +49,8 @@ const BackgroundCover = () => (
 );
 
 const Home = ({ user }) => {
-  const { data: lastSixStocks = null } = useGetLastSixStocksQuery();
   const { data: valueOfTransaction = "..." } = useGetValueOfTransactionQuery();
   const { data: valueOfDailyVolume = "..." } = useGetValueOfDailyVolumeQuery();
-  const [trigger, allStocksData = null] = useLazyGetStocksQuery();
 
   return (
     <>
@@ -105,12 +94,11 @@ const Home = ({ user }) => {
           icon={earning}
         />
       </div>
-      <div className="bg-stone-50 shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]" id="step-two">
-        <TransactionHistoryTable
-          stocks={lastSixStocks}
-          allStocks={allStocksData.data}
-          fetchAllStocks={trigger}
-        />
+      <div
+        className="bg-stone-50 shadow-xl rounded-xl p-10 pb-5 mb-6 xl:w-[60%] lg:w-[70%] w-[90%]"
+        id="step-two"
+      >
+        <TransactionHistoryTable />
       </div>
     </>
   );

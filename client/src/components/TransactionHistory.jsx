@@ -3,7 +3,11 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { trash, edit } from "../assets";
-import { useDeleteStockMutation } from "../services/stockRecord";
+import {
+  useDeleteStockMutation,
+  useGetLastSixStocksQuery,
+  useLazyGetStocksQuery,
+} from "../services/stockRecord";
 
 const HistoryTableHeader = () => {
   return (
@@ -102,18 +106,21 @@ const HistoryTableListSkeleton = ({ count }) => {
   );
 };
 
-const TransactionHistoryTable = ({ stocks, allStocks, fetchAllStocks, id }) => {
+const TransactionHistoryTable = () => {
+  const { data: lastSixStocks = null } = useGetLastSixStocksQuery();
+  const [allStocksDataTrigger, allStocksData = null] = useLazyGetStocksQuery();
+
   let historyTableList;
-  if (allStocks) {
-    historyTableList = <HistoryTableList stocks={allStocks} />;
-  } else if (stocks) {
-    historyTableList = <HistoryTableList stocks={stocks} />;
+  if (allStocksData.data) {
+    historyTableList = <HistoryTableList stocks={allStocksData.data} />;
+  } else if (lastSixStocks) {
+    historyTableList = <HistoryTableList stocks={lastSixStocks} />;
   } else {
     historyTableList = <HistoryTableListSkeleton count={4} />;
   }
 
   return (
-    <div id={id}>
+    <div>
       {/* title */}
       <div className="flex justify-between pb-6">
         <h2 className="text-primary-300 font-bold text-3xl">Recent Orders</h2>
@@ -135,7 +142,8 @@ const TransactionHistoryTable = ({ stocks, allStocks, fetchAllStocks, id }) => {
       <div className="flex justify-end w-full">
         <button
           className="underline cursor-pointer pr-3 pt-3 text-primary-300"
-          onClick={() => fetchAllStocks()}
+          // onClick={() => fetchAllStocks()}
+          onClick={() => allStocksDataTrigger()}
         >
           view all
         </button>

@@ -1,78 +1,77 @@
-import React, { useEffect } from "react";
 import { useGetSymbolQuery } from "../services/finnhubStock";
 
 const stockList = [
   {
     symbol: "MSFT",
-    change: "",
+    change: "...",
   },
   {
     symbol: "INTC",
-    change: "",
+    change: "...",
   },
   {
     symbol: "T",
-    change: "",
+    change: "...",
   },
   {
     symbol: "MCD",
-    change: "",
+    change: "...",
   },
   {
     symbol: "KO",
-    change: "",
+    change: "...",
   },
   {
     symbol: "NFLX",
-    change: "",
+    change: "...",
   },
   {
     symbol: "SBUX",
-    change: "",
+    change: "...",
   },
   {
     symbol: "COST",
-    change: "",
+    change: "...",
   },
   {
     symbol: "NVDA",
-    change: "",
+    change: "...",
   },
   {
     symbol: "DWAC",
-    change: "",
+    change: "...",
   },
   {
     symbol: "QQQ",
-    change: "",
+    change: "...",
   },
   {
     symbol: "META",
-    change: "",
+    change: "...",
   },
   {
     symbol: "AAPL",
-    change: "",
+    change: "...",
   },
   {
     symbol: "DIS",
-    change: "",
+    change: "...",
   },
   {
     symbol: "SPY",
-    change: "",
+    change: "...",
   },
-]
+];
 
 const updateStocks = (data) => {
   data.forEach((stock) => {
-    const {data} = useGetSymbolQuery(stock.symbol);
+    const { data } = useGetSymbolQuery(stock.symbol);
     if (data) {
-      let dataChange = (data?.d/data?.c*100).toFixed(2)
-      stock.change = dataChange
+      let dataChange = ((data?.d / data?.c) * 100).toFixed(2);
+      stock.change = dataChange;
     }
-  })
-}
+  });
+};
 
 const StockTicker = () => {
   updateStocks(stockList);

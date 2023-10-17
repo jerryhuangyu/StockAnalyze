@@ -1,9 +1,9 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { trash, edit } from "../assets";
+import { useDeleteStockMutation } from "../services/stockRecord";
 
 const HistoryTableHeader = () => {
   return (
@@ -23,21 +23,9 @@ const HistoryTableHeader = () => {
 
 const HistoryTableList = ({ stocks }) => {
   const navigation = useNavigate();
-  const handleDelete = async (id) => {
-    try {
-      const response = await fetch(
-        import.meta.env.VITE_SERVER_URL + "stock/" + id,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      alert(data);
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
+  const [deleteStock, { isLoading }] = useDeleteStockMutation();
+  const handleDelete = (id) => {
+    if (!isLoading) deleteStock(id);
   };
   const navToUpdateId = (e, id) => {
     if (e.target === e.currentTarget) {

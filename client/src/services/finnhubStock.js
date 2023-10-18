@@ -9,10 +9,7 @@ const finnhubStockApi = baseApi.injectEndpoints({
       query: () => `${endpointUrl}quote?symbol=AAPL&token=${token}`,
     }),
     getSymbol: builder.query({
-      query: (symbol) => ({
-        url: `${endpointUrl}quote?symbol=${symbol}`,
-        headers: { "X-Finnhub-Token": `${token}` },
-      }),
+      query: (symbol) => `${endpointUrl}quote?symbol=${symbol}&token=${token}`,
     }),
   }),
 });

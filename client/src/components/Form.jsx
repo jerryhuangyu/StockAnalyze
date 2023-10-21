@@ -22,7 +22,7 @@ const StockForm = ({ title, isUpdate = false }) => {
   const location = useLocation();
   const stockId = location.pathname.split("/").slice(-1);
 
-  const [theStockTrigger, originStock] = useLazyGetStockQuery();
+  const [getStockTrigger, originStock] = useLazyGetStockQuery();
   const [addStockTrigger] = useAddStockMutation();
   const [updateStockTrigger] = useUpdateStockMutation();
 
@@ -42,6 +42,11 @@ const StockForm = ({ title, isUpdate = false }) => {
   const updateStockWithToken = async ({ id, stock }) => {
     const token = await getAccessTokenSilently();
     updateStockTrigger({ id, stock, token });
+  };
+
+  const getStockWithToken = async (id) => {
+    const token = await getAccessTokenSilently();
+    getStockTrigger({ id, token });
   };
 
   const handleInputChange = (e) => {
@@ -64,6 +69,7 @@ const StockForm = ({ title, isUpdate = false }) => {
       console.log(error);
     }
   };
+
   const inputLists = [
     {
       type: "text",
@@ -107,7 +113,7 @@ const StockForm = ({ title, isUpdate = false }) => {
 
   useEffect(() => {
     if (stockId && isUpdate) {
-      theStockTrigger(stockId);
+      getStockWithToken(stockId);
     }
   }, []);
 

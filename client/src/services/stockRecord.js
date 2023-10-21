@@ -13,7 +13,10 @@ const stockRecordApi = baseApi.injectEndpoints({
     }),
 
     getStock: builder.query({
-      query: (id) => `${endpointUrl}stock/${id}`,
+      query: ({ id, token }) => ({
+        url: `${endpointUrl}stock/${id}`,
+        headers: { Authorization: `Bearer ${token}` },
+      }),
     }),
 
     getLastSixStocks: builder.query({

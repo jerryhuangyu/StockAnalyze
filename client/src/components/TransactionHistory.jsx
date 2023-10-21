@@ -10,6 +10,7 @@ import {
   useDeleteStockMutation,
 } from "../services/stockRecord";
 import { trash, edit } from "../assets";
+import { getTokenAndQuery } from "../utils/authUtils";
 
 const HistoryTableHeader = () => {
   return (
@@ -125,18 +126,8 @@ const TransactionHistoryTable = () => {
     historyTableList = <HistoryTableListSkeleton count={6} />;
   }
 
-  const getLastSixStocksWithToken = async () => {
-    const token = await getAccessTokenSilently();
-    lastSixStocksTrigger(token, true);
-  };
-
-  const fetchAllStocksWithToken = async () => {
-    const token = await getAccessTokenSilently();
-    allStocksTrigger(token, true);
-  };
-
   useEffect(() => {
-    getLastSixStocksWithToken();
+    getTokenAndQuery(lastSixStocksTrigger, getAccessTokenSilently);
   }, []);
 
   return (
@@ -162,7 +153,9 @@ const TransactionHistoryTable = () => {
       <div className="flex justify-end w-full">
         <button
           className="underline cursor-pointer pr-3 pt-3 text-primary-300"
-          onClick={fetchAllStocksWithToken}
+          onClick={() =>
+            getTokenAndQuery(allStocksTrigger, getAccessTokenSilently)
+          }
         >
           view all
         </button>

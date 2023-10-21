@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
 
 import {
   transactionIcon,
@@ -13,8 +15,7 @@ import {
   useLazyGetDailyVolumeQuery,
   useLazyGetTransactionQuery,
 } from "../services/stockRecord";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
+import { getTokenAndQuery } from "../utils/authUtils";
 
 const LoginLink = () => (
   <Link
@@ -62,19 +63,9 @@ const Home = ({ user }) => {
   const [transactionTrigger, transaction] = useLazyGetTransactionQuery();
   const { getAccessTokenSilently } = useAuth0();
 
-  const getTransactionWithToken = async () => {
-    const token = await getAccessTokenSilently();
-    transactionTrigger(token, true);
-  };
-
-  const getDailyVolumeWithToken = async () => {
-    const token = await getAccessTokenSilently();
-    dailyVolumeTrigger(token, true);
-  };
-
   useEffect(() => {
-    getTransactionWithToken();
-    getDailyVolumeWithToken();
+    getTokenAndQuery(transactionTrigger, getAccessTokenSilently);
+    getTokenAndQuery(dailyVolumeTrigger, getAccessTokenSilently);
   }, []);
 
   return (

@@ -1,5 +1,7 @@
+import { toast } from "react-toastify";
+
 const showToast = () => {
-  // TODO: show hint user to login
+  toast.error("Why not login first?", { toastId: "login_required" });
 };
 
 export const getTokenAndQuery = async (

@@ -1,9 +1,11 @@
 import useMediaQuery from "beautiful-react-hooks/useMediaQuery";
-import Driver from "driver.js";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SkeletonTheme } from "react-loading-skeleton";
+import Driver from "driver.js";
 import "driver.js/dist/driver.min.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Add, Home, Update, Symbol, Login } from "./pages";
@@ -61,6 +63,18 @@ function App() {
         </div>
         <Footer />
       </SkeletonTheme>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </BrowserRouter>
   );
 }

@@ -1,16 +1,14 @@
+import useMediaQuery from "beautiful-react-hooks/useMediaQuery";
+import Driver from "driver.js";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import useMediaQuery from "beautiful-react-hooks/useMediaQuery";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import jwt_decode from "jwt-decode";
-import Driver from "driver.js";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "driver.js/dist/driver.min.css";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-import { Add, Home, Update, Symbol, Login } from "./pages";
-import { Chart, Footer, Navbar, StockTicker } from "./components";
-import { steps } from "./constants";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { Add, Home, Update, Symbol, Login } from "./pages";
+import { Chart, Footer, Navbar } from "./components";
+import { steps } from "./constants";
 
 function App() {
   const isSmall = useMediaQuery("(max-width: 640px)");

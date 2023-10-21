@@ -1,55 +1,76 @@
-// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseApi } from "./baseApi";
-
 const endpointUrl = import.meta.env.VITE_SERVER_URL;
 
 const stockRecordApi = baseApi.injectEndpoints({
   tagTypes: ["stock"],
   endpoints: (builder) => ({
     getStocks: builder.query({
-      query: () => `${endpointUrl}stocks`,
+      query: (token) => ({
+        url: `${endpointUrl}stocks`,
+        headers: { Authorization: `Bearer ${token}` },
+      }),
       // providesTags: [''],
     }),
+
     getStock: builder.query({
       query: (id) => `${endpointUrl}stock/${id}`,
     }),
+
     getLastSixStocks: builder.query({
-      query: () => `${endpointUrl}stocks/lastsix`,
+      query: (token) => ({
+        url: `${endpointUrl}stocks/lastsix`,
+        headers: { Authorization: `Bearer ${token}` },
+      }),
       providesTags: ["stock"],
     }),
+
     addStock: builder.mutation({
-      query: (stock) => ({
+      query: ({ stock, token }) => ({
         url: endpointUrl + "stock",
         method: "POST",
         body: stock,
+        headers: { Authorization: `Bearer ${token}` },
       }),
       invalidatesTags: ["stock"],
     }),
+
     updateStock: builder.mutation({
-      query: ({ id, stock }) => ({
+      query: ({ id, stock, token }) => ({
         url: endpointUrl + `stock/${id}`,
         method: "PUT",
         body: stock,
+        headers: { Authorization: `Bearer ${token}` },
       }),
       invalidatesTags: ["stock"],
     }),
+
     deleteStock: builder.mutation({
-      query: (id) => ({
+      query: ({ id, token }) => ({
         url: endpointUrl + `stock/${id}`,
         method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
       }),
       invalidatesTags: ["stock"],
     }),
-    getValueOfTransaction: builder.query({
-      query: () => `${endpointUrl}stocks/value/transaction`,
+
+    getTransaction: builder.query({
+      query: (token) => ({
+        url: `${endpointUrl}stocks/value/transaction`,
+        headers: { Authorization: `Bearer ${token}` },
+      }),
       transformResponse: (res) => res[0].idcount,
       providesTags: ["stock"],
     }),
-    getValueOfDailyVolume: builder.query({
-      query: () => `${endpointUrl}stocks/value/dailyvolume`,
+
+    getDailyVolume: builder.query({
+      query: (token) => ({
+        url: `${endpointUrl}stocks/value/dailyvolume`,
+        headers: { Authorization: `Bearer ${token}` },
+      }),
       transformResponse: (res) => res[0].volumecount,
       providesTags: ["stock"],
     }),
+
     getStocksCategory: builder.query({
       query: () => `${endpointUrl}stocks/category`,
       // transformResponse: res => res[0].volumecount
@@ -58,15 +79,14 @@ const stockRecordApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetStocksQuery,
   useLazyGetStocksQuery,
   useGetStockQuery,
   useLazyGetStockQuery,
+  useLazyGetLastSixStocksQuery,
+  useLazyGetTransactionQuery,
+  useLazyGetDailyVolumeQuery,
+  useGetStocksCategoryQuery,
   useAddStockMutation,
   useUpdateStockMutation,
   useDeleteStockMutation,
-  useGetLastSixStocksQuery,
-  useGetValueOfTransactionQuery,
-  useGetValueOfDailyVolumeQuery,
-  useGetStocksCategoryQuery,
 } = stockRecordApi;

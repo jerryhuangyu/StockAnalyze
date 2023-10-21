@@ -1,13 +1,15 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { trash, edit } from "../assets";
 import {
-  useDeleteStockMutation,
-  useGetLastSixStocksQuery,
+  useLazyGetLastSixStocksQuery,
   useLazyGetStocksQuery,
+  useDeleteStockMutation,
 } from "../services/stockRecord";
+import { trash, edit } from "../assets";
 
 const HistoryTableHeader = () => {
   return (
@@ -27,10 +29,16 @@ const HistoryTableHeader = () => {
 
 const HistoryTableList = ({ stocks }) => {
   const navigation = useNavigate();
-  const [deleteStock, { isLoading }] = useDeleteStockMutation();
-  const handleDelete = (id) => {
-    if (!isLoading) deleteStock(id);
+  const { getAccessTokenSilently } = useAuth0();
+  const [deleteStockTrigger, { isLoading }] = useDeleteStockMutation();
+
+  const handleDeleteWithToken = async (id) => {
+    if (!isLoading) {
+      const token = await getAccessTokenSilently();
+      deleteStockTrigger({ id, token });
+    }
   };
+
   const navToUpdateId = (e, id) => {
     if (e.target === e.currentTarget) {
       navigation(`/update/${id}`);
@@ -61,7 +69,10 @@ const HistoryTableList = ({ stocks }) => {
               </Link>
             </div>
           </td>
-          <td className="py-2 pr-2" onClick={() => handleDelete(stock.id)}>
+          <td
+            className="py-2 pr-2"
+            onClick={() => handleDeleteWithToken(stock.id)}
+          >
             <div className="cursor-pointer flex justify-center items-center bg-red-200 w-6 h-6 rounded-full z-50">
               <img src={trash} alt="delete" className="w-4" />
             </div>
@@ -107,17 +118,32 @@ const HistoryTableListSkeleton = ({ count }) => {
 };
 
 const TransactionHistoryTable = () => {
-  const { data: lastSixStocks = null } = useGetLastSixStocksQuery();
-  const [allStocksDataTrigger, allStocksData = null] = useLazyGetStocksQuery();
+  const [lastSixStocksTrigger, lastSixStocks] = useLazyGetLastSixStocksQuery();
+  const [allStocksTrigger, allStocks] = useLazyGetStocksQuery();
+  const { getAccessTokenSilently } = useAuth0();
 
   let historyTableList;
-  if (allStocksData.data) {
-    historyTableList = <HistoryTableList stocks={allStocksData.data} />;
-  } else if (lastSixStocks) {
-    historyTableList = <HistoryTableList stocks={lastSixStocks} />;
+  if (allStocks.data) {
+    historyTableList = <HistoryTableList stocks={allStocks.data} />;
+  } else if (lastSixStocks.data) {
+    historyTableList = <HistoryTableList stocks={lastSixStocks.data} />;
   } else {
     historyTableList = <HistoryTableListSkeleton count={4} />;
   }
+
+  const getLastSixStocksWithToken = async () => {
+    const token = await getAccessTokenSilently();
+    lastSixStocksTrigger(token, true);
+  };
+
+  const fetchAllStocksWithToken = async () => {
+    const token = await getAccessTokenSilently();
+    allStocksTrigger(token, true);
+  };
+
+  useEffect(() => {
+    getLastSixStocksWithToken();
+  }, []);
 
   return (
     <div>
@@ -142,8 +168,7 @@ const TransactionHistoryTable = () => {
       <div className="flex justify-end w-full">
         <button
           className="underline cursor-pointer pr-3 pt-3 text-primary-300"
-          // onClick={() => fetchAllStocks()}
-          onClick={() => allStocksDataTrigger()}
+          onClick={fetchAllStocksWithToken}
         >
           view all
         </button>

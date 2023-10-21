@@ -1,11 +1,20 @@
 import { Link } from "react-router-dom";
 
-import { transaction, money, earning, volue, question, bell } from "../assets";
+import {
+  transactionIcon,
+  money,
+  earning,
+  volue,
+  question,
+  bell,
+} from "../assets";
 import { TransactionHistoryTable, HomeCard, StockTicker } from "../components";
 import {
-  useGetValueOfTransactionQuery,
-  useGetValueOfDailyVolumeQuery,
+  useLazyGetDailyVolumeQuery,
+  useLazyGetTransactionQuery,
 } from "../services/stockRecord";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
 
 const LoginLink = () => (
   <Link
@@ -49,8 +58,24 @@ const BackgroundCover = () => (
 );
 
 const Home = ({ user }) => {
-  const { data: valueOfTransaction = "..." } = useGetValueOfTransactionQuery();
-  const { data: valueOfDailyVolume = "..." } = useGetValueOfDailyVolumeQuery();
+  const [dailyVolumeTrigger, dailyVolume] = useLazyGetDailyVolumeQuery();
+  const [transactionTrigger, transaction] = useLazyGetTransactionQuery();
+  const { getAccessTokenSilently } = useAuth0();
+
+  const getTransactionWithToken = async () => {
+    const token = await getAccessTokenSilently();
+    transactionTrigger(token, true);
+  };
+
+  const getDailyVolumeWithToken = async () => {
+    const token = await getAccessTokenSilently();
+    dailyVolumeTrigger(token, true);
+  };
+
+  useEffect(() => {
+    getTransactionWithToken();
+    getDailyVolumeWithToken();
+  }, []);
 
   return (
     <>
@@ -78,12 +103,12 @@ const Home = ({ user }) => {
       </div>
       <div className="grid sm:gap-3 gap-4 mb-3 grid-cols-1 sm:grid-cols-2 xl:w-[60%] lg:w-[70%] w-[90%] h-[400px] sm:h-[240px]">
         <HomeCard
-          header={valueOfTransaction}
+          header={transaction.data}
           description={"Transaction"}
-          icon={transaction}
+          icon={transactionIcon}
         />
         <HomeCard
-          header={valueOfDailyVolume}
+          header={dailyVolume.data}
           description={"Daily Volume"}
           icon={volue}
         />

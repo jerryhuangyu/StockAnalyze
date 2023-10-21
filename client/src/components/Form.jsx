@@ -1,9 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
-  useAddStockMutation,
   useLazyGetStockQuery,
+  useAddStockMutation,
   useUpdateStockMutation,
 } from "../services/stockRecord";
 import { save, trash } from "../assets";
@@ -16,13 +17,14 @@ const StockForm = ({ title, isUpdate = false }) => {
   const amountInputRef = useRef(null);
   const statusInputRef = useRef(null);
 
+  const { getAccessTokenSilently } = useAuth0();
   const navigation = useNavigate();
   const location = useLocation();
   const stockId = location.pathname.split("/").slice(-1);
 
-  const [trigger, originStock] = useLazyGetStockQuery();
-  const [addStock] = useAddStockMutation();
-  const [updateStock] = useUpdateStockMutation();
+  const [theStockTrigger, originStock] = useLazyGetStockQuery();
+  const [addStockTrigger] = useAddStockMutation();
+  const [updateStockTrigger] = useUpdateStockMutation();
 
   const [stock, setStock] = useState({
     symbol: "",
@@ -32,19 +34,30 @@ const StockForm = ({ title, isUpdate = false }) => {
     status: "",
   });
 
+  const addStockWithToken = async (stock) => {
+    const token = await getAccessTokenSilently();
+    addStockTrigger({ stock, token });
+  };
+
+  const updateStockWithToken = async ({ id, stock }) => {
+    const token = await getAccessTokenSilently();
+    updateStockTrigger({ id, stock, token });
+  };
+
   const handleInputChange = (e) => {
     setStock((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
+
   const handleStockFormSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isUpdate) {
-        updateStock({ id: stockId, stock: stock });
+        updateStockWithToken({ id: stockId, stock: stock });
       } else {
-        addStock(stock);
+        addStockWithToken(stock);
       }
       navigation("/");
     } catch (error) {
@@ -94,9 +107,10 @@ const StockForm = ({ title, isUpdate = false }) => {
 
   useEffect(() => {
     if (stockId && isUpdate) {
-      trigger(stockId);
+      theStockTrigger(stockId);
     }
   }, []);
+
   useEffect(() => {
     if (originStock.data) {
       const data = originStock.data[0];

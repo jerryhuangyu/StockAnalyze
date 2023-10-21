@@ -14,10 +14,10 @@ import { trash, edit } from "../assets";
 const HistoryTableHeader = () => {
   return (
     <thead>
-      <tr className="items-center justify-center font-bold">
-        <td className={`py-2 pl-3`}>Symbol</td>
+      <tr className="font-bold">
+        <td className={`py-2 pl-3 w-[100px]`}>Symbol</td>
         <td className={`py-2 w-[100px] text-end pr-6`}>Price</td>
-        <td className={`py-2 text-center`}>Quantity</td>
+        <td className={`py-2 w-[100px] text-center`}>Quantity</td>
         <td className={`py-2 text-end pr-3 hidden lg:table-cell`}>Amount</td>
         <td className={`py-2 text-end pr-3 hidden md:table-cell`}>Status</td>
         <td className={`py-2 w-[25px] text-end pr-3`}></td>
@@ -84,33 +84,27 @@ const HistoryTableList = ({ stocks }) => {
 };
 
 const HistoryTableListSkeleton = ({ count }) => {
+  const tdSkeletonStyle = [
+    "",
+    "",
+    "",
+    "hidden lg:table-cell",
+    "hidden md:table-cell",
+    "",
+    "",
+  ];
+
   return (
     <tbody>
       {Array(count)
         .fill(0)
         .map((_, id) => (
-          <tr className="border-b-[1px] z-10" key={id}>
-            <td>
-              <Skeleton height="30px" />
-            </td>
-            <td>
-              <Skeleton height="30px" />
-            </td>
-            <td>
-              <Skeleton height="30px" />
-            </td>
-            <td className={`hidden lg:table-cell`}>
-              <Skeleton height="30px" />
-            </td>
-            <td className={`hidden md:table-cell`}>
-              <Skeleton height="30px" />
-            </td>
-            <td>
-              <Skeleton height="30px" />
-            </td>
-            <td>
-              <Skeleton height="30px" />
-            </td>
+          <tr className="border-b-[1px] h-[41px] z-10 w-full" key={id}>
+            {tdSkeletonStyle.map((style, id) => (
+              <td key={id} className={`px-2 ${style}`}>
+                <Skeleton height="14px" />
+              </td>
+            ))}
           </tr>
         ))}
     </tbody>
@@ -128,7 +122,7 @@ const TransactionHistoryTable = () => {
   } else if (lastSixStocks.data) {
     historyTableList = <HistoryTableList stocks={lastSixStocks.data} />;
   } else {
-    historyTableList = <HistoryTableListSkeleton count={4} />;
+    historyTableList = <HistoryTableListSkeleton count={6} />;
   }
 
   const getLastSixStocksWithToken = async () => {

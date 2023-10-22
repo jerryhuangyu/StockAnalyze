@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { auth } from "express-oauth2-jwt-bearer";
+import { expressjwt as jwt } from "express-jwt";
+import * as jwks from "jwks-rsa";
 import * as dotenv from "dotenv";
 import {
   appTestRouter,
@@ -11,16 +12,22 @@ import {
 
 dotenv.config();
 
-const jwtCheck = auth({
+const verifyJwt = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `${process.env.AUTH_ISSUER_BASE_URL}.well-known/jwks.json`,
+  }),
   audience: process.env.AUTH_AUDIENCE,
-  issuerBaseURL: process.env.AUTH_ISSUER_BASE_URL,
-  tokenSigningAlg: process.env.AUTH_ALG,
-});
+  issuer: process.env.AUTH_ISSUER_BASE_URL,
+  algorithms: [process.env.AUTH_ALG],
+}).unless({ path: ["/test"] });
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(jwtCheck);
+app.use(verifyJwt);
 
 app.use("/stocks", stocksRouter);
 app.use("/stock", stockRouter);

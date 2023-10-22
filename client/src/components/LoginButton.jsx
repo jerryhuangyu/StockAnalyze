@@ -9,7 +9,7 @@ const LoginButton = ({ className = "", onClick = () => {} }) => {
   const buttonTitle = isAuthenticated ? "Log Out" : "Log In";
   return (
     <div
-      className={`flex gap-2 items-center px-2 ${className}`}
+      className={`flex gap-2 min-w-[110px] items-center px-2 ${className}`}
       onClick={() => {
         handleOnClick();
         onClick();

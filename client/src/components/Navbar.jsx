@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import { LoginButton, NavbarLink } from "./";
-import { bookkeep, analyze, home, menu, guide } from "../assets";
+import { bookkeep, analyze, profileIcon, menu, guide } from "../assets";
 
 const Navbar = ({ showOnboardGuide, driver }) => {
   const { user } = useAuth0();
@@ -17,7 +17,8 @@ const Navbar = ({ showOnboardGuide, driver }) => {
 
       {/* menu for beyond sm */}
       <div className="sm:flex hidden">
-        <NavbarLink icon={home} linkName={"Home"} linkTo={"/"} />
+        {/* TODO: naming conflict profile and login */}
+        <NavbarLink icon={profileIcon} linkName={"Profile"} linkTo={"/login"} />
         <NavbarLink
           icon={analyze}
           linkName={"Analyze"}
@@ -59,9 +60,9 @@ const Navbar = ({ showOnboardGuide, driver }) => {
         flex flex-col items-start gap-3`}
       >
         <NavbarLink
-          icon={home}
-          linkName={"Home"}
-          linkTo={"/"}
+          icon={profileIcon}
+          linkName={"Profile"}
+          linkTo={"/login"}
           onClick={() => setMenuToggle(!menuToggle)}
           className="gap-3 text-lg"
         />

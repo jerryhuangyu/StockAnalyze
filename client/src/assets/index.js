@@ -9,6 +9,7 @@ import home from "./navbar/home.svg";
 import menu from "./navbar/menu.png";
 import login from "./navbar/enter.png";
 import guide from "./navbar/guide.png";
+import profileIcon from "./navbar/profile.svg";
 
 import question from "./member/question.png";
 
@@ -35,4 +36,5 @@ export {
   login,
   guide,
   bell,
+  profileIcon,
 };

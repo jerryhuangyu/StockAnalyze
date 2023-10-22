@@ -1,8 +1,5 @@
 import { toast } from "react-toastify";
-
-const showToast = () => {
-  toast.error("Why not login first?", { toastId: "login_required" });
-};
+import LoginToast from "../components/toast/LoginToast";
 
 export const getTokenAndQuery = async (
   queryFunction,
@@ -15,7 +12,7 @@ export const getTokenAndQuery = async (
     return result;
   } catch (e) {
     if (e.error === "login_required") {
-      showToast();
+      toast.error(<LoginToast msg={e.message} />, { toastId: e.error });
     } else {
       console.log(JSON.stringify(e));
     }

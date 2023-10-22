@@ -1,53 +1,18 @@
-import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 
+import { transactionIcon, money, earning, volue } from "../assets";
 import {
-  transactionIcon,
-  money,
-  earning,
-  volue,
-  question,
-  bell,
-} from "../assets";
-import { TransactionHistoryTable, HomeCard, StockTicker } from "../components";
+  TransactionHistoryTable,
+  HomeCard,
+  StockTicker,
+  ProfileCard,
+} from "../components";
 import {
   useLazyGetDailyVolumeQuery,
   useLazyGetTransactionQuery,
 } from "../services/stockRecord";
 import { getTokenAndQuery } from "../utils/authUtils";
-
-const LoginLink = () => (
-  <Link
-    to="/login"
-    className="cursor-pointer bg-primary-hover hover:bg-primary-out px-3 rounded-full"
-  >
-    Login Now
-  </Link>
-);
-
-const PersonalProfile = ({ picture, username }) => {
-  const src = picture ? picture : question;
-  const name = username ? username : <LoginLink />;
-  return (
-    <div className="flex justify-between" id="step-one">
-      <div className="flex gap-6">
-        <img
-          src={src}
-          alt="member"
-          className="w-[60px] object-cover aspect-square rounded-full"
-        />
-        <div>
-          <p className="text-primary-300">Hello, good morning!</p>
-          <p className="mt-2">{name}</p>
-        </div>
-      </div>
-      <div className="flex items-center">
-        <img src={bell} alt="notification" className="w-6 h-6" />
-      </div>
-    </div>
-  );
-};
 
 const BackgroundCover = () => (
   <div
@@ -58,7 +23,7 @@ const BackgroundCover = () => (
   </div>
 );
 
-const Home = ({ user }) => {
+const Home = () => {
   const [dailyVolumeTrigger, dailyVolume] = useLazyGetDailyVolumeQuery();
   const [transactionTrigger, transaction] = useLazyGetTransactionQuery();
   const { getAccessTokenSilently } = useAuth0();
@@ -78,7 +43,7 @@ const Home = ({ user }) => {
         className="xl:w-[60%] lg:w-[70%] w-[90%] pt-10 pb-10"
         id="first-element-introduction"
       >
-        <PersonalProfile username={user.name} picture={user.picture} />
+        <ProfileCard />
       </div>
       <div className="h-[200px] flex flex-col items-center">
         <p className="text-primary-300">Available Balance</p>

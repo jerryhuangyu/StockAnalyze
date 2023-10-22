@@ -8,16 +8,18 @@ import StockTicker from "./StockTicker";
 import Footer from "./Footer";
 import LoginButton from "./LoginButton";
 import NavbarLink from "./NavbarLink";
+import ProfileCard from "./ProfileCard";
 
 export {
-    TransactionHistoryTable,
-    StockForm,
-    GroupButton,
-    Chart,
-    Navbar,
-    HomeCard,
-    StockTicker,
-    Footer,
-    LoginButton,
-    NavbarLink,
-}
+  TransactionHistoryTable,
+  StockForm,
+  GroupButton,
+  Chart,
+  Navbar,
+  HomeCard,
+  StockTicker,
+  Footer,
+  LoginButton,
+  NavbarLink,
+  ProfileCard,
+};

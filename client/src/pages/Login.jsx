@@ -30,10 +30,10 @@ const Login = () => {
 
   return (
     <div className="h-screen mt-16">
-      {console.log(user)}
+      {/* {console.log(user)} */}
       {isAuthenticated && (
         <LoginWellcome
-          userName={user.given_name}
+          userName={user.name || user.nickname}
           userPic={user.picture}
           handleSignOut={() =>
             logout({

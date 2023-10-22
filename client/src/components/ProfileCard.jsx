@@ -15,7 +15,7 @@ const LoginLink = () => (
 const ProfileCard = () => {
   const { user } = useAuth0();
   const src = (user && user.picture) || question;
-  const name = (user && user.name) || <LoginLink />;
+  const name = (user && (user.name || user.nickname)) || <LoginLink />;
 
   return (
     <div className="flex justify-between" id="step-one">

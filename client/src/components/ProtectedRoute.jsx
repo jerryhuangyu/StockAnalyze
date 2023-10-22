@@ -1,12 +1,13 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ redirectPath = "/login" }) => {
-  const { isAuthenticated } = useAuth0();
-
+const ProtectedRoute = ({
+  children,
+  redirectPath = "/login",
+  isAuthenticated,
+}) => {
   if (!isAuthenticated) {
     return <Navigate replace to={redirectPath} />;
   }
-  return <Outlet />;
+  return children ? children : <Outlet />;
 };
 export default ProtectedRoute;

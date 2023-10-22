@@ -2,6 +2,7 @@ import useMediaQuery from "beautiful-react-hooks/useMediaQuery";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SkeletonTheme } from "react-loading-skeleton";
+import { useAuth0 } from "@auth0/auth0-react";
 import Driver from "driver.js";
 import "driver.js/dist/driver.min.css";
 import { ToastContainer } from "react-toastify";
@@ -16,6 +17,7 @@ function App() {
   const isSmall = useMediaQuery("(max-width: 640px)");
   const [user, setUser] = useState({});
   const driver = new Driver();
+  const { isAuthenticated } = useAuth0();
 
   const showOnboardGuide = (driver) => {
     try {
@@ -48,7 +50,9 @@ function App() {
         <div className="flex flex-col mt-1 items-center overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Home user={user} />} />
-            <Route element={<ProtectedRoute />}>
+            <Route
+              element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
+            >
               <Route path="/add" element={<Add />} />
               <Route path="/update/:id" element={<Update />} />
               <Route path="/symbol" element={<Symbol />}>

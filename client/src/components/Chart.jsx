@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import {
   BarChart,
@@ -12,17 +13,76 @@ import {
 
 const colors = ["#82ca9d", "#8884d8"];
 
+const fetchStockHistoryWithSymbol = async (
+  getAccessTokenSilently,
+  stockSymbol,
+  setStockHistoryDatas,
+  setBuyStockAverage,
+  setSellStockAverage
+) => {
+  let buyTotalAmount = 0;
+  let buyTotalQuantity = 0;
+  let sellTotalAmount = 0;
+  let sellTotalQuantity = 0;
+
+  try {
+    const token = await getAccessTokenSilently();
+    const response = await fetch(
+      import.meta.env.VITE_SERVER_URL + "symbol/" + stockSymbol,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    const resDatas = await response.json();
+
+    const datas = resDatas.map((data) => {
+      data.transaction = Math.sign(data.amount) * data.price;
+      return data;
+    });
+    setStockHistoryDatas(datas);
+
+    let buyAverage = 0;
+    let sellAverage = 0;
+    datas.forEach((x) => {
+      if (x.amount > 0) {
+        sellTotalAmount += x.amount;
+        sellTotalQuantity += x.quantity;
+        sellAverage = sellTotalAmount / sellTotalQuantity;
+      } else {
+        buyTotalAmount += x.amount;
+        buyTotalQuantity += x.quantity;
+        buyAverage = buyTotalAmount / buyTotalQuantity;
+      }
+    });
+    setBuyStockAverage(buyAverage);
+    setSellStockAverage(sellAverage);
+  } catch (error) {
+    // alert(error);
+    console.log(error);
+  }
+};
+
 const Chart = () => {
-  const {
-    stockHistoryDatas: [stockHistoryDatas, setStockHistoryDatas],
-    buyStockAverage: [buyStockAverage, setBuyStockAverage],
-    sellStockAverage: [sellStockAverage, setSellStockAverage],
-    stockSymbol: [stockSymbol, setStockSymbol],
-  } = useOutletContext();
   const { symbol } = useParams();
+  const [stockHistoryDatas, setStockHistoryDatas] = useState([]);
+  const [buyStockAverage, setBuyStockAverage] = useState(0.0);
+  const [sellStockAverage, setSellStockAverage] = useState(0.0);
+  const { getAccessTokenSilently } = useAuth0();
+  const {
+    stockSymbol: [, setStockSymbol],
+  } = useOutletContext();
 
   useEffect(() => {
     setStockSymbol(symbol);
+    fetchStockHistoryWithSymbol(
+      getAccessTokenSilently,
+      symbol,
+      setStockHistoryDatas,
+      setBuyStockAverage,
+      setSellStockAverage
+    );
   }, [symbol]);
 
   return (

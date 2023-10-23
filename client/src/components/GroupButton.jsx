@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const GroupButton = ({ names }) => {
+const GroupButton = ({ names = [] }) => {
   return (
     <div className="inline-flex rounded-md gap-[2px] shadow-sm">
       {names.map((name, index) => {

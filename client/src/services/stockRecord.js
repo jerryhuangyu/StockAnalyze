@@ -75,7 +75,10 @@ const stockRecordApi = baseApi.injectEndpoints({
     }),
 
     getStocksCategory: builder.query({
-      query: () => `${endpointUrl}stocks/category`,
+      query: (token) => ({
+        url: `${endpointUrl}stocks/category`,
+        headers: { Authorization: `Bearer ${token}` },
+      }),
       // transformResponse: res => res[0].volumecount
     }),
   }),
@@ -88,7 +91,7 @@ export const {
   useLazyGetLastSixStocksQuery,
   useLazyGetTransactionQuery,
   useLazyGetDailyVolumeQuery,
-  useGetStocksCategoryQuery,
+  useLazyGetStocksCategoryQuery,
   useAddStockMutation,
   useUpdateStockMutation,
   useDeleteStockMutation,

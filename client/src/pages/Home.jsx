@@ -7,21 +7,13 @@ import {
   HomeCard,
   StockTicker,
   ProfileCard,
+  BackgroundCover,
 } from "../components";
 import {
   useLazyGetDailyVolumeQuery,
   useLazyGetTransactionQuery,
 } from "../services/stockRecord";
 import { getTokenAndQuery } from "../utils/authUtils";
-
-const BackgroundCover = () => (
-  <div
-    className="fixed top-0 invert w-full h-full -z-20 opacity-25"
-    style={{ backgroundImage: "url(/grid.svg)" }}
-  >
-    <div className="background_gradient" />
-  </div>
-);
 
 const Home = () => {
   const [dailyVolumeTrigger, dailyVolume] = useLazyGetDailyVolumeQuery();

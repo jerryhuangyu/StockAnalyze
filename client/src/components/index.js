@@ -9,6 +9,9 @@ import Footer from "./Footer";
 import LoginButton from "./LoginButton";
 import NavbarLink from "./NavbarLink";
 import ProfileCard from "./ProfileCard";
+import BackgroundCover from "./BackgroundCover";
+import ErrorImage from "./notFound/ErrorImage";
+import HomeButton from "./notFound/HomeButton";
 
 export {
   TransactionHistoryTable,
@@ -22,4 +25,7 @@ export {
   LoginButton,
   NavbarLink,
   ProfileCard,
+  BackgroundCover,
+  ErrorImage,
+  HomeButton,
 };

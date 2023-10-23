@@ -13,6 +13,9 @@ import profileIcon from "./navbar/profile.svg";
 
 import question from "./member/question.png";
 
+import notFoundIcon from "./notFound/404_01.webp";
+import notFoundIcon2 from "./notFound/404_02.webp";
+
 import transactionIcon from "./transaction.png";
 import money from "./money.png";
 import earning from "./earning.png";
@@ -37,4 +40,6 @@ export {
   guide,
   bell,
   profileIcon,
+  notFoundIcon,
+  notFoundIcon2,
 };

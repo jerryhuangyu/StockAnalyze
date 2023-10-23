@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import { GroupButton } from "../components";
 import { useGetStocksCategoryQuery } from "../services/stockRecord";
 

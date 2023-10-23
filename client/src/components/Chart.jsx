@@ -1,14 +1,11 @@
-import React, { PureComponent, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import {
   BarChart,
   Bar,
   Cell,
-  XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ReferenceLine,
   ResponsiveContainer,
 } from "recharts";

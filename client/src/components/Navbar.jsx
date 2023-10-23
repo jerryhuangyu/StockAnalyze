@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 
 import { LoginButton, NavbarLink } from "./";
 import { bookkeep, analyze, profileIcon, menu, guide } from "../assets";
 
 const Navbar = ({ showOnboardGuide, driver }) => {
-  const { user } = useAuth0();
   const [menuToggle, setMenuToggle] = useState(false);
 
   return (

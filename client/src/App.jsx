@@ -1,23 +1,17 @@
 import useMediaQuery from "beautiful-react-hooks/useMediaQuery";
-import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SkeletonTheme } from "react-loading-skeleton";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Driver from "driver.js";
 import "driver.js/dist/driver.min.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
 
 import ProtectedRoute from "./components/ProtectedRoute";
-import { Add, Home, Update, Symbol, Login } from "./pages";
+import { Add, Home, Update, Symbol, Login, PageNotFound } from "./pages";
 import { Chart, Footer, Navbar } from "./components";
 import { steps } from "./constants";
 
 function App() {
   const isSmall = useMediaQuery("(max-width: 640px)");
-  const [user, setUser] = useState({});
   const driver = new Driver();
-  const { isAuthenticated } = useAuth0();
 
   const showOnboardGuide = (driver) => {
     try {
@@ -40,46 +34,24 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <SkeletonTheme baseColor="#ebebe8" highlightColor="#dadad8">
-        <Navbar
-          user={user}
-          showOnboardGuide={showOnboardGuide}
-          driver={driver}
-        />
-        <div className="flex flex-col mt-1 items-center overflow-x-hidden">
-          <Routes>
-            <Route path="/" element={<Home user={user} />} />
-            <Route
-              element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
-            >
-              <Route path="/add" element={<Add />} />
-              <Route path="/update/:id" element={<Update />} />
-              <Route path="/symbol" element={<Symbol />}>
-                <Route path=":symbol" element={<Chart />} />
-              </Route>
+    <>
+      <Navbar showOnboardGuide={showOnboardGuide} driver={driver} />
+      <div className="flex flex-col mt-1 items-center overflow-x-hidden">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/add" element={<Add />} />
+            <Route path="/update/:id" element={<Update />} />
+            <Route path="/symbol" element={<Symbol />}>
+              <Route path=":symbol" element={<Chart />} />
             </Route>
-            <Route
-              path="/login"
-              element={<Login user={user} setUser={setUser} />}
-            />
-          </Routes>
-        </div>
-        <Footer />
-      </SkeletonTheme>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-    </BrowserRouter>
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </div>
+      <Footer />
+    </>
   );
 }
 

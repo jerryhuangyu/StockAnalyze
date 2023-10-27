@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const LoginToast = ({ msg }) => {
+const LoginBtn = ({ msg }) => {
   const navigate = useNavigate();
   const handleClick = () => navigate("/login");
   return (
@@ -12,4 +12,5 @@ const LoginToast = ({ msg }) => {
     </div>
   );
 };
-export default LoginToast;
+
+export default LoginBtn;

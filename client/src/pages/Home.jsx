@@ -1,6 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
-
 import { transactionIcon, money, earning, volue } from "../assets";
 import {
   TransactionHistoryTable,
@@ -13,18 +10,11 @@ import {
   useLazyGetDailyVolumeQuery,
   useLazyGetTransactionQuery,
 } from "../services/stockRecord";
-import { getTokenAndQuery } from "../utils/authUtils";
+import { useQueryFetch } from "../hooks/useQueryFetch";
 
 const Home = () => {
-  const [dailyVolumeTrigger, dailyVolume] = useLazyGetDailyVolumeQuery();
-  const [transactionTrigger, transaction] = useLazyGetTransactionQuery();
-  const { getAccessTokenSilently } = useAuth0();
-
-  useEffect(() => {
-    getTokenAndQuery(transactionTrigger, getAccessTokenSilently);
-    getTokenAndQuery(dailyVolumeTrigger, getAccessTokenSilently);
-  }, []);
-
+  const { data: dailyVolume } = useQueryFetch(useLazyGetDailyVolumeQuery);
+  const { data: transaction } = useQueryFetch(useLazyGetTransactionQuery);
   return (
     <>
       <BackgroundCover />

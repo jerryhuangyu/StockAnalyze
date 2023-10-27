@@ -1,18 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { GroupButton } from "../components";
 import { useLazyGetStocksCategoryQuery } from "../services/stockRecord";
-import { getTokenAndQuery } from "../utils/authUtils";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useQueryFetch } from "../hooks/useQueryFetch";
 
 const Symbol = () => {
-  const { getAccessTokenSilently } = useAuth0();
-  const [categoryTrigger, category] = useLazyGetStocksCategoryQuery();
   const [stockSymbol, setStockSymbol] = useState();
-
-  useEffect(() => {
-    getTokenAndQuery(categoryTrigger, getAccessTokenSilently);
-  });
+  const { data: category } = useQueryFetch(useLazyGetStocksCategoryQuery);
 
   return (
     <div className="w-[450px] h-[calc(100vh-132px)] flex flex-col justify-center">

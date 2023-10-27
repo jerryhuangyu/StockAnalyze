@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Skeleton from "react-loading-skeleton";
@@ -10,7 +9,7 @@ import {
   useDeleteStockMutation,
 } from "../services/stockRecord";
 import { trash, edit } from "../assets";
-import { getTokenAndQuery } from "../utils/authUtils";
+import { useQueryFetch } from "../hooks/useQueryFetch";
 
 const HistoryTableHeader = () => {
   return (
@@ -30,13 +29,13 @@ const HistoryTableHeader = () => {
 
 const HistoryTableList = ({ stocks }) => {
   const navigation = useNavigate();
-  const { getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const [deleteStockTrigger, { isLoading }] = useDeleteStockMutation();
 
-  const handleDeleteWithToken = async (id) => {
+  const handleDeleteWithToken = async (id, userId) => {
     if (!isLoading) {
       const token = await getAccessTokenSilently();
-      deleteStockTrigger({ id, token });
+      deleteStockTrigger({ id, token, userId });
     }
   };
 
@@ -72,7 +71,7 @@ const HistoryTableList = ({ stocks }) => {
           </td>
           <td
             className="py-2 pr-2"
-            onClick={() => handleDeleteWithToken(stock.id)}
+            onClick={() => handleDeleteWithToken(stock.id, user.sub)}
           >
             <div className="cursor-pointer flex justify-center items-center bg-red-200 w-6 h-6 rounded-full z-50">
               <img src={trash} alt="delete" className="w-4" />
@@ -113,22 +112,19 @@ const HistoryTableListSkeleton = ({ count }) => {
 };
 
 const TransactionHistoryTable = () => {
-  const [lastSixStocksTrigger, lastSixStocks] = useLazyGetLastSixStocksQuery();
-  const [allStocksTrigger, allStocks] = useLazyGetStocksQuery();
-  const { getAccessTokenSilently } = useAuth0();
+  const { data: lastSix } = useQueryFetch(useLazyGetLastSixStocksQuery);
+  const { data: all, lazyTrigger } = useQueryFetch(useLazyGetStocksQuery, {
+    lazy: true,
+  });
 
   let historyTableList;
-  if (allStocks.data) {
-    historyTableList = <HistoryTableList stocks={allStocks.data} />;
-  } else if (lastSixStocks.data) {
-    historyTableList = <HistoryTableList stocks={lastSixStocks.data} />;
+  if (all.data) {
+    historyTableList = <HistoryTableList stocks={all.data} />;
+  } else if (lastSix.data) {
+    historyTableList = <HistoryTableList stocks={lastSix.data} />;
   } else {
     historyTableList = <HistoryTableListSkeleton count={6} />;
   }
-
-  useEffect(() => {
-    getTokenAndQuery(lastSixStocksTrigger, getAccessTokenSilently);
-  }, []);
 
   return (
     <div>
@@ -153,9 +149,7 @@ const TransactionHistoryTable = () => {
       <div className="flex justify-end w-full">
         <button
           className="underline cursor-pointer pr-3 pt-3 text-primary-300"
-          onClick={() =>
-            getTokenAndQuery(allStocksTrigger, getAccessTokenSilently)
-          }
+          onClick={lazyTrigger}
         >
           view all
         </button>

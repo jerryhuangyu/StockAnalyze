@@ -9,6 +9,7 @@ import {
 } from "../services/stockRecord";
 import { save, trash } from "../assets";
 import FormInput from "./FormInput";
+import { useQueryFetch } from "../hooks/useQueryFetch";
 
 const StockForm = ({ title, isUpdate = false }) => {
   const symbolInputRef = useRef(null);
@@ -17,14 +18,16 @@ const StockForm = ({ title, isUpdate = false }) => {
   const amountInputRef = useRef(null);
   const statusInputRef = useRef(null);
 
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const navigation = useNavigate();
   const location = useLocation();
   const stockId = location.pathname.split("/").slice(-1);
 
-  const [getStockTrigger, originStock] = useLazyGetStockQuery();
   const [addStockTrigger] = useAddStockMutation();
   const [updateStockTrigger] = useUpdateStockMutation();
+  const { data: originStock } = useQueryFetch(useLazyGetStockQuery, {
+    arg: { id: stockId },
+  });
 
   const [stock, setStock] = useState({
     symbol: "",
@@ -32,6 +35,7 @@ const StockForm = ({ title, isUpdate = false }) => {
     quantity: null,
     amount: null,
     status: "",
+    userId: user.sub,
   });
 
   const addStockWithToken = async (stock) => {
@@ -42,11 +46,6 @@ const StockForm = ({ title, isUpdate = false }) => {
   const updateStockWithToken = async ({ id, stock }) => {
     const token = await getAccessTokenSilently();
     updateStockTrigger({ id, stock, token });
-  };
-
-  const getStockWithToken = async (id) => {
-    const token = await getAccessTokenSilently();
-    getStockTrigger({ id, token });
   };
 
   const handleInputChange = (e) => {
@@ -112,28 +111,25 @@ const StockForm = ({ title, isUpdate = false }) => {
   ];
 
   useEffect(() => {
-    if (stockId && isUpdate) {
-      getStockWithToken(stockId);
-    }
-  }, []);
-
-  useEffect(() => {
     if (originStock.data) {
       const data = originStock.data[0];
-      // setup defualt value for submit
-      setStock({
-        symbol: data.symbol,
-        price: data.price,
-        quantity: data.quantity,
-        amount: data.amount,
-        status: data.status,
-      });
-      // setup defualt value for visual in form
-      symbolInputRef.current.value = data.symbol;
-      priceInputRef.current.value = data.price;
-      quantityInputRef.current.value = data.quantity;
-      amountInputRef.current.value = data.amount;
-      statusInputRef.current.value = data.status;
+      if (data) {
+        // setup defualt value for submit
+        setStock({
+          symbol: data.symbol,
+          price: data.price,
+          quantity: data.quantity,
+          amount: data.amount,
+          status: data.status,
+          userId: data.userId,
+        });
+        // setup defualt value for visual in form
+        symbolInputRef.current.value = data.symbol;
+        priceInputRef.current.value = data.price;
+        quantityInputRef.current.value = data.quantity;
+        amountInputRef.current.value = data.amount;
+        statusInputRef.current.value = data.status;
+      }
     }
   }, [originStock.data]);
   return (

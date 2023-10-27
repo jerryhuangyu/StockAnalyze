@@ -1,60 +1,63 @@
-import express from 'express';
-import db from '../databases/mysql.js';
+import express from "express";
+import db from "../databases/mysql.js";
+import { tableName } from "../const.js";
 
 const stockRouter = express.Router();
 
-stockRouter.post('/', (req, res) => {
-    const query = "INSERT INTO olulu (`symbol`, `price`, `quantity`, `amount`, `status`) VALUES (?);";
-    const values = [
-        req.body.symbol,
-        req.body.price,
-        req.body.quantity,
-        req.body.amount,
-        req.body.status
-    ]
+stockRouter.post("/", (req, res) => {
+  const query = `INSERT INTO ${tableName} (\`symbol\`, \`price\`, \`quantity\`, \`amount\`, \`status\`, \`userId\`) VALUES (?);`;
+  const values = [
+    req.body.symbol,
+    req.body.price,
+    req.body.quantity,
+    req.body.amount,
+    req.body.status,
+    req.body.userId,
+  ];
 
-    db.query(query, [values], (err, data) => {
-        if (err) return res.json(err);
-        return res.json("Stock has been created successfully");
-    })
+  db.query(query, [values], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Stock has been created successfully");
+  });
 });
 
-stockRouter.get('/:id', (req, res) => {
-    const bookId = req.params.id;
-    const query = "SELECT * FROM olulu WHERE id = ?";
+stockRouter.get("/:id", (req, res) => {
+  const stockId = req.params.id;
+  const query = `SELECT * FROM ${tableName} WHERE id = ?`;
 
-    db.query(query, [bookId], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    })
-})
-
-stockRouter.delete('/:id', (req, res) => {
-    const bookId = req.params.id;
-    const query = "DELETE FROM olulu WHERE id = ?";
-
-    db.query(query, [bookId], (err, data) => {
-        if (err) return res.json(err);
-        return res.json("Stock has been deleted successfully");
-    })
+  db.query(query, [stockId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
 });
 
-stockRouter.put('/:id', (req, res) => {
-    const bookId = req.params.id;
-    const query = "UPDATE olulu SET `symbol` = ?, `price` = ?, `quantity` = ?, `amount` = ?, `status` = ? WHERE id = ?";
-    const values = [
-        req.body.symbol,
-        req.body.price,
-        req.body.quantity,
-        req.body.amount,
-        req.body.status
-    ]
+stockRouter.delete("/:id", (req, res) => {
+  const stockId = req.params.id;
+  const userId = req.body.userId;
+  const query = `DELETE FROM ${tableName} WHERE id = ${stockId} AND userId = '${userId}'`;
 
-    db.query(query, [...values, bookId], (err, data) => {
-        console.log(err);
-        if (err) return res.json(err);
-        return res.json("Stock has been updated successfully");
-    })
+  db.query(query, (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Stock has been deleted successfully");
+  });
 });
 
-export default stockRouter
+stockRouter.put("/:id", (req, res) => {
+  const stockId = req.params.id;
+  const query = `UPDATE ${tableName} SET \`symbol\` = ?, \`price\` = ?, \`quantity\` = ?, \`amount\` = ?, \`status\` = ?, \`userId\` = ? WHERE id = ?`;
+  const values = [
+    req.body.symbol,
+    req.body.price,
+    req.body.quantity,
+    req.body.amount,
+    req.body.status,
+    req.body.userId,
+  ];
+
+  db.query(query, [...values, stockId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Stock has been updated successfully");
+  });
+});
+
+export default stockRouter;

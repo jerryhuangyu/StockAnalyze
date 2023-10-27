@@ -5,24 +5,27 @@ const stockRecordApi = baseApi.injectEndpoints({
   tagTypes: ["stock"],
   endpoints: (builder) => ({
     getStocks: builder.query({
-      query: (token) => ({
+      query: ({ token, userId }) => ({
         url: `${endpointUrl}stocks`,
         headers: { Authorization: `Bearer ${token}` },
+        params: { userId },
       }),
-      // providesTags: [''],
+      providesTags: ["stock"],
     }),
 
     getStock: builder.query({
-      query: ({ id, token }) => ({
+      query: ({ token, userId, id }) => ({
         url: `${endpointUrl}stock/${id}`,
         headers: { Authorization: `Bearer ${token}` },
+        params: { userId },
       }),
     }),
 
     getLastSixStocks: builder.query({
-      query: (token) => ({
+      query: ({ token, userId }) => ({
         url: `${endpointUrl}stocks/lastsix`,
         headers: { Authorization: `Bearer ${token}` },
+        params: { userId },
       }),
       providesTags: ["stock"],
     }),
@@ -48,34 +51,37 @@ const stockRecordApi = baseApi.injectEndpoints({
     }),
 
     deleteStock: builder.mutation({
-      query: ({ id, token }) => ({
+      query: ({ id, token, userId }) => ({
         url: endpointUrl + `stock/${id}`,
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
+        body: { userId: userId },
       }),
       invalidatesTags: ["stock"],
     }),
 
     getTransaction: builder.query({
-      query: (token) => ({
+      query: ({ token, userId }) => ({
         url: `${endpointUrl}stocks/value/transaction`,
         headers: { Authorization: `Bearer ${token}` },
+        params: { userId },
       }),
       transformResponse: (res) => res[0].idcount,
       providesTags: ["stock"],
     }),
 
     getDailyVolume: builder.query({
-      query: (token) => ({
+      query: ({ token, userId }) => ({
         url: `${endpointUrl}stocks/value/dailyvolume`,
         headers: { Authorization: `Bearer ${token}` },
+        params: { userId },
       }),
       transformResponse: (res) => res[0].volumecount,
       providesTags: ["stock"],
     }),
 
     getStocksCategory: builder.query({
-      query: (token) => ({
+      query: ({ token }) => ({
         url: `${endpointUrl}stocks/category`,
         headers: { Authorization: `Bearer ${token}` },
       }),

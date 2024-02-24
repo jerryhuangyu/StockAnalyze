@@ -66,7 +66,7 @@ const stockRecordApi = baseApi.injectEndpoints({
         headers: { Authorization: `Bearer ${token}` },
         params: { userId },
       }),
-      transformResponse: (res) => res[0].idcount,
+      transformResponse: (res) => res[0]?.idcount,
       providesTags: ["stock"],
     }),
 
@@ -76,7 +76,7 @@ const stockRecordApi = baseApi.injectEndpoints({
         headers: { Authorization: `Bearer ${token}` },
         params: { userId },
       }),
-      transformResponse: (res) => res[0].volumecount,
+      transformResponse: (res) => res[0]?.volumecount,
       providesTags: ["stock"],
     }),
 

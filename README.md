@@ -1,7 +1,9 @@
-# Stock Insight App
+# S-Insight
 
-demo: https://stockinsight.vercel.app/  
-source: https://github.com/jerryhuangyu/StockAnalyze  
+S-Insight is a SaaS platform designed to empowers you to effortlessly monitor investments and gain valuable insights into your transaction history.
+
+- [demo](https://stockinsight.vercel.app/)  
+- [source](https://github.com/jerryhuangyu/StockAnalyze)  
 
 ## 📦 Technologies
 

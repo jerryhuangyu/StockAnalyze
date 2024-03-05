@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { LoginButton, NavbarLink } from "./";
-import { bookkeep, analyze, profileIcon, menu, guide } from "../assets";
+import { bookkeep, analyze, profileIcon, home, menu, guide } from "../assets";
 
 const Navbar = ({ showOnboardGuide, driver }) => {
   const [menuToggle, setMenuToggle] = useState(false);
@@ -16,6 +16,7 @@ const Navbar = ({ showOnboardGuide, driver }) => {
       {/* menu for beyond sm */}
       <div className="sm:flex hidden">
         {/* TODO: naming conflict profile and login */}
+        <NavbarLink icon={home} linkName={"Home"} linkTo={"/"} />
         <NavbarLink icon={profileIcon} linkName={"Profile"} linkTo={"/login"} />
         <NavbarLink
           icon={analyze}
@@ -57,6 +58,13 @@ const Navbar = ({ showOnboardGuide, driver }) => {
         } absolute w-[40%] min-w-[235px] max-w-[300px] h-screen z-10 bg-primary-200 duration-700 py-10 px-12
         flex flex-col items-start gap-3`}
       >
+        <NavbarLink
+          icon={home}
+          linkName={"Home"}
+          linkTo={"/"}
+          onClick={() => setMenuToggle(!menuToggle)}
+          className="gap-3 text-lg"
+        />
         <NavbarLink
           icon={profileIcon}
           linkName={"Profile"}

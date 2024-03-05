@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useMediaQuery from "beautiful-react-hooks/useMediaQuery";
 
 import { LoginButton, NavbarLink } from "./";
 import { bookkeep, analyze, profileIcon, home, menu, guide } from "../assets";
+import { showGuide } from "../utils/guide";
 
-const Navbar = ({ showOnboardGuide, driver }) => {
+const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
+  const isSmall = useMediaQuery("(max-width: 640px)");
 
   return (
     <div className="flex justify-between px-[5%] lg:px-10 h-[60px] bg-primary-50 ">
@@ -35,7 +38,7 @@ const Navbar = ({ showOnboardGuide, driver }) => {
           linkName={"Guide Me"}
           linkTo={"/"}
           onClick={(e) => {
-            showOnboardGuide(driver);
+            showGuide(isSmall);
             e.stopPropagation();
           }}
         />
@@ -91,7 +94,7 @@ const Navbar = ({ showOnboardGuide, driver }) => {
           linkName={"Guide Me"}
           onClick={(e) => {
             setMenuToggle(!menuToggle);
-            showOnboardGuide(driver);
+            showGuide(isSmall);
             e.stopPropagation();
           }}
           className="gap-3 text-lg"

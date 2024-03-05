@@ -1,7 +1,4 @@
 import url from "./url";
-import steps from "./tourSteps";
+import steps from "./guideSteps";
 
-export {
-    url,
-    steps,
-}
+export { url, steps };

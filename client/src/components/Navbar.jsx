@@ -8,7 +8,6 @@ import { showGuide } from "../utils/guide";
 
 const DesktopNavbar = () => (
   <div className="sm:flex hidden">
-    {/* TODO: naming conflict profile and login */}
     <NavbarLink icon={home} linkName={"Home"} linkTo={"/"} />
     <NavbarLink icon={profileIcon} linkName={"Profile"} linkTo={"/login"} />
     <NavbarLink

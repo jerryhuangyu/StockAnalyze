@@ -30,7 +30,6 @@ const Login = () => {
 
   return (
     <div className="h-screen mt-16">
-      {/* {console.log(user)} */}
       {isAuthenticated && (
         <LoginWellcome
           userName={user.name || user.nickname}

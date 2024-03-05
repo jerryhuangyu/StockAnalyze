@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
 const FormInput = forwardRef(function (
-  { type, name, placeholder, handleChange },
+  { type, name, placeholder, handleChange, disabled = false },
   ref
 ) {
   return (
@@ -12,6 +12,7 @@ const FormInput = forwardRef(function (
       name={name}
       placeholder={placeholder}
       onChange={handleChange}
+      disabled={disabled}
     />
   );
 });

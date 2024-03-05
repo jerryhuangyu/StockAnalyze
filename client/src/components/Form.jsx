@@ -100,6 +100,7 @@ const StockForm = ({ title, isUpdate = false }) => {
       placeholder: "Amount",
       handleFunction: handleInputChange,
       ref: amountInputRef,
+      disabled: true,
     },
     {
       type: "text",
@@ -132,6 +133,29 @@ const StockForm = ({ title, isUpdate = false }) => {
       }
     }
   }, [originStock.data]);
+
+  useEffect(() => {
+    const newAmount = parseFloat(stock.quantity * stock.price).toFixed(2);
+    setStock((prev) => ({
+      ...prev,
+      amount: newAmount,
+    }));
+    amountInputRef.current.value = newAmount;
+  }, [stock.quantity, stock.price]);
+
+  useEffect(() => {
+    const boughtOrSold = stock.quantity > 0 ? "Bought" : "Sold";
+    const absoluteQuantity = Math.abs(stock.quantity);
+    const newStatus = `${boughtOrSold} ${absoluteQuantity} ${stock.symbol} @ ${stock.price}`;
+    if (!stock.quantity || !stock.price || !stock.symbol) return;
+
+    setStock((prev) => ({
+      ...prev,
+      status: newStatus,
+    }));
+    statusInputRef.current.value = newStatus;
+  }, [stock.quantity, stock.price, stock.symbol]);
+
   return (
     <div
       className="flex flex-col gap-2 lg:w-[40%] sm:w-[60%] w-[85%]
@@ -146,6 +170,7 @@ const StockForm = ({ title, isUpdate = false }) => {
           ref={inputList.ref}
           placeholder={inputList.placeholder}
           handleChange={inputList.handleFunction}
+          disabled={inputList.disabled}
         />
       ))}
       <hr className="h-3 border-t-1 mt-3 border-black" />

@@ -21,10 +21,10 @@ const LoginWellcome = ({ userName, userPic, handleSignOut }) => {
 };
 
 const Login = () => {
-  const { user, isAuthenticated, loginWithPopup, logout } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   useEffect(() => {
     if (!isAuthenticated) {
-      loginWithPopup();
+      loginWithRedirect();
     }
   }, []);
 

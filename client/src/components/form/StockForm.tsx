@@ -1,21 +1,30 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { save, trash } from "../../assets";
-import { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAuth0 } from "@auth0/auth0-react";
+import { save, trash } from "../../assets/form";
 
 import {
-  useLazyGetStockQuery,
   useAddStockMutation,
   useUpdateStockMutation,
+  // @ts-ignore
 } from "../../services/stockRecord";
-import { useQueryFetch } from "../../hooks/useQueryFetch";
 
 type FormProps = {
   title: string;
   isUpdate?: boolean;
+  originStock?: {
+    id: number;
+    symbol: string;
+    price: number;
+    quantity: number;
+    amount: number;
+    status: string;
+    userId: string;
+  };
+  updatedStockId?: string;
 };
 
 const schema = yup
@@ -37,18 +46,17 @@ const FormErrorText = ({ error }: { error: string | undefined }) => (
   <>{error && <p className="text-red-400 text-sm">{error}</p>}</>
 );
 
-const SForm = ({ title, isUpdate = false }: FormProps) => {
-  const { getAccessTokenSilently, user } = useAuth0();
+const StockForm = ({
+  title,
+  isUpdate = false,
+  originStock,
+  updatedStockId,
+}: FormProps) => {
   const navigation = useNavigate();
-  const location = useLocation();
-  const stockId = location.pathname.split("/").slice(-1);
-
+  const { getAccessTokenSilently, user } = useAuth0();
+  const [userId, setUserId] = useState(user?.sub);
   const [addStockTrigger] = useAddStockMutation();
   const [updateStockTrigger] = useUpdateStockMutation();
-  // const { data: originStock } = useQueryFetch(useLazyGetStockQuery, {
-  //   arg: { id: stockId },
-  // });
-
   const {
     register,
     handleSubmit,
@@ -60,22 +68,23 @@ const SForm = ({ title, isUpdate = false }: FormProps) => {
 
   useEffect(() => {
     setValue("symbol", watch("symbol").toUpperCase());
-    trigger("symbol");
+    if (watch("symbol") !== "") {
+      trigger("symbol");
+    }
   }, [watch("symbol")]);
-
   useEffect(() => {
     const quantity = watch("quantity");
     const price = watch("price");
     const newStatus =
       watch("quantity").toString() === "" ||
       watch("price").toString() === "" ||
+      // @ts-ignore
       !Number.isInteger(parseFloat(quantity))
         ? undefined
         : (quantity * price).toFixed(2);
 
     setValue("amount", newStatus);
   }, [watch("price"), watch("quantity")]);
-
   useEffect(() => {
     const q = watch("quantity");
     const s = watch("symbol");
@@ -87,15 +96,27 @@ const SForm = ({ title, isUpdate = false }: FormProps) => {
     const newStatus = `${boughtOrSold} ${absoluteQuantity} ${s} @ ${p}`;
     setValue("status", newStatus);
   }, [watch("quantity"), watch("price"), watch("symbol")]);
+  useEffect(() => {
+    if (originStock) {
+      const data = originStock;
+      if (data) {
+        setValue("symbol", data.symbol);
+        setValue("price", data.price);
+        setValue("quantity", data.quantity);
+        setValue("amount", data.amount.toString());
+        setValue("status", data.status);
+        setUserId(data.userId);
+      }
+    }
+  }, [originStock]);
 
   const onStockFormSubmit: SubmitHandler<Inputs> = async (data, e) => {
-    console.log(data);
-    const stock = { ...data, userId: user?.sub };
+    const stock = { ...data, userId };
     e?.preventDefault();
     try {
       const token = await getAccessTokenSilently();
       if (isUpdate) {
-        updateStockTrigger({ id: stockId, stock, token });
+        updateStockTrigger({ id: updatedStockId, stock, token });
       } else {
         addStockTrigger({ stock, token });
       }
@@ -160,4 +181,4 @@ const SForm = ({ title, isUpdate = false }: FormProps) => {
     </form>
   );
 };
-export default SForm;
+export default StockForm;

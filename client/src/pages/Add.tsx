@@ -1,5 +1,4 @@
-import { StockForm } from "../components";
-import SForm from "../components/form/SForm";
+import StockForm from "../components/form/StockForm";
 
 const Add = () => {
   const title = "Add New Order History";
@@ -7,7 +6,6 @@ const Add = () => {
   return (
     <div className="w-full h-[calc(100vh-132px)] flex items-center justify-center">
       <StockForm title={title} />
-      <SForm title={title} />
     </div>
   );
 };

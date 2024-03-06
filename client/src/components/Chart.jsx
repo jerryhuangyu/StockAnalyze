@@ -18,7 +18,8 @@ const fetchStockHistoryWithSymbol = async (
   stockSymbol,
   setStockHistoryDatas,
   setBuyStockAverage,
-  setSellStockAverage
+  setSellStockAverage,
+  user
 ) => {
   let buyTotalAmount = 0;
   let buyTotalQuantity = 0;
@@ -32,6 +33,7 @@ const fetchStockHistoryWithSymbol = async (
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
+        body: { userId: user.sub },
       }
     );
 
@@ -69,7 +71,7 @@ const Chart = () => {
   const [stockHistoryDatas, setStockHistoryDatas] = useState([]);
   const [buyStockAverage, setBuyStockAverage] = useState(0.0);
   const [sellStockAverage, setSellStockAverage] = useState(0.0);
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const {
     stockSymbol: [, setStockSymbol],
   } = useOutletContext();
@@ -81,7 +83,8 @@ const Chart = () => {
       symbol,
       setStockHistoryDatas,
       setBuyStockAverage,
-      setSellStockAverage
+      setSellStockAverage,
+      user
     );
   }, [symbol]);
 

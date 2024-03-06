@@ -81,9 +81,10 @@ const stockRecordApi = baseApi.injectEndpoints({
     }),
 
     getStocksCategory: builder.query({
-      query: ({ token }) => ({
+      query: ({ token, userId }) => ({
         url: `${endpointUrl}stocks/category`,
         headers: { Authorization: `Bearer ${token}` },
+        params: { userId },
       }),
       // transformResponse: res => res[0].volumecount
     }),

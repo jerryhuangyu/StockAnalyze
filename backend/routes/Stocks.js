@@ -15,7 +15,8 @@ stocksRouter.get("/", (req, res) => {
 });
 
 stocksRouter.get("/category", (req, res) => {
-  const query = `SELECT DISTINCT symbol FROM ${tableName}`;
+  const userId = req.query.userId;
+  const query = `SELECT DISTINCT symbol FROM ${tableName} WHERE userId = '${userId}'`;
 
   db.query(query, (err, data) => {
     if (err) return res.json(err);

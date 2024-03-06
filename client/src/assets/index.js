@@ -1,5 +1,4 @@
 import trash from "./trash-can.png";
-import save from "./floppy-disk.png";
 import edit from "./write.png";
 
 import bookkeep from "./navbar/bookkeep.svg";
@@ -25,7 +24,6 @@ import bell from "./bell.png";
 export {
   question,
   trash,
-  save,
   edit,
   bookkeep,
   analyze,

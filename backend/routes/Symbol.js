@@ -6,7 +6,7 @@ const symbolRouter = express.Router();
 
 symbolRouter.get("/:symbol", (req, res) => {
   const symbol = req.params.symbol;
-  const userId = req.body.userId;
+  const userId = req.params.userId;
   const query = `SELECT * FROM ${tableName} WHERE symbol = ? AND userId = '${userId}'`;
 
   db.query(query, [symbol], (err, data) => {

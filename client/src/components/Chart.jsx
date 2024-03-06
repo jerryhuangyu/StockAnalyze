@@ -29,11 +29,13 @@ const fetchStockHistoryWithSymbol = async (
   try {
     const token = await getAccessTokenSilently();
     const response = await fetch(
-      import.meta.env.VITE_SERVER_URL + "symbol/" + stockSymbol,
+      import.meta.env.VITE_SERVER_URL +
+        "symbol/" +
+        stockSymbol +
+        `&userId=${user.sub}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
-        body: { userId: user.sub },
       }
     );
 

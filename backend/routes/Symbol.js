@@ -4,7 +4,7 @@ import { tableName } from "../const.js";
 
 const symbolRouter = express.Router();
 
-symbolRouter.get("/:symbol", (req, res) => {
+symbolRouter.get("/:symbol/:userId", (req, res) => {
   const symbol = req.params.symbol;
   const userId = req.params.userId;
   const query = `SELECT * FROM ${tableName} WHERE symbol = ? AND userId = '${userId}'`;

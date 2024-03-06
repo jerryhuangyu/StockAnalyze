@@ -32,7 +32,7 @@ const fetchStockHistoryWithSymbol = async (
       import.meta.env.VITE_SERVER_URL +
         "symbol/" +
         stockSymbol +
-        `&userId=${user.sub}`,
+        `/${user.sub}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

@@ -9,6 +9,7 @@ import {
   Tooltip,
   ReferenceLine,
   ResponsiveContainer,
+  XAxis,
 } from "recharts";
 
 const colors = ["#82ca9d", "#8884d8"];
@@ -105,11 +106,10 @@ const Chart = () => {
           }}
         >
           <CartesianGrid strokeDasharray="2 5" />
-          {/* <XAxis dataKey="quantity" /> */}
+          <XAxis dataKey="quantity" hide />
           {/* <YAxis /> */}
           <Tooltip />
           {/* <Legend /> */}
-          {/* <Bar dataKey="transaction" fill={ props.data.transaction > 0 ? 'green' : "red"} /> */}
           <Bar dataKey="transaction">
             {stockHistoryDatas.map((entry, index) => (
               <Cell
@@ -129,7 +129,7 @@ const Chart = () => {
             stroke="#000"
           />
           <ReferenceLine
-            y={sellStockAverage}
+            y={-sellStockAverage}
             label={{
               value: `sell avarage: ${sellStockAverage.toFixed(2)}`,
               position: "top",

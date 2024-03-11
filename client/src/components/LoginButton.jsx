@@ -14,6 +14,7 @@ const LoginButton = ({ className = "", onClick = () => {} }) => {
         handleOnClick();
         onClick();
       }}
+      data-cy="login-button"
     >
       <img className="w-4 h-4" src={login} alt={`${buttonTitle} botton`} />
       <button>{buttonTitle}</button>
